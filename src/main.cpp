@@ -19,7 +19,7 @@ void setup() {
 	data.RSSI = -120;
 	data.SNR = -5;
 }
-                    
+
 void loop() {
 	heltec_loop();
 
