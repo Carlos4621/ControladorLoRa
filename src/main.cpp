@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "Display.hpp"
 #include <heltec_unofficial.h>
+#include "BTS7960.hpp"
 
 Display dis{ display };
 
@@ -18,7 +19,7 @@ void setup() {
 	data.RSSI = -120;
 	data.SNR = -5;
 }
-
+                    
 void loop() {
 	heltec_loop();
 
