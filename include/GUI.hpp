@@ -18,9 +18,9 @@ struct GUIData {
     bool buttonY;
 };
 
-class Display {
+class GUI {
 public:
-    Display(SSD1306Wire& display);
+    GUI(SSD1306Wire& display);
 
     void displayConnectingWaiting();
 
