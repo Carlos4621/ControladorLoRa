@@ -8,7 +8,7 @@ GUI dis{ display };
 
 GUIData data;
 
-LoRaCommunicator lo{ radio };
+LoRaCommunicator<16> lo{ radio };
 
 std::array<uint8_t, 16> testPackage{ 4, 6, 2, 1 };
 
@@ -40,12 +40,15 @@ void setup() {
 void loop() {
 	heltec_loop();
 
-	delay(5000);
+	try {
+		testPackage = lo.receivePackage(100);
 
-	testPackage = std::move(lo.receivePackage());
-
-	for (size_t i = 0; i < 4; i++) {
-		Serial.println(testPackage[i]);
+		for (size_t i = 0; i < 4; ++i) {
+			Serial.println(testPackage[i]);
+		}
 	}
-	
+	catch(const std::exception& e)
+	{
+		Serial.println(e.what());
+	}
 }
