@@ -20,7 +20,7 @@ struct GUIData {
 
 class GUI {
 public:
-    GUI(SSD1306Wire& display);
+    explicit GUI(SSD1306Wire& display);
 
     void displayConnectingWaiting();
 
