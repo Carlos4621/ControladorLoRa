@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include "AnalogOutput.hpp"
+#include <stdexcept>
 
 class BTS7960 {
 public:

@@ -3,6 +3,7 @@
 #define DISPLAY_HEADER
 
 #include <heltec_unofficial.h>
+#include <string>
 
 struct GUIData {
     float RSSI;
