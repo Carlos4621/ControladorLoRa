@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+message Buttons {
+    bool buttonA = 1;
+    bool buttonB = 2;
+    bool buttonX = 3;
+    bool buttonY = 4;
+}

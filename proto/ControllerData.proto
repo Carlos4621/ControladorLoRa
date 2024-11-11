@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+import "Joystick.proto";
+import "Buttons.proto";
+import "Modes.proto";
+
+message ControllerData {
+    Joystick leftJoystick = 1;
+    Joystick rightJoystick = 2;
+
+    Buttons buttons = 3;
+
+    Modes selectedMode = 4;
+
+    sint32 fixedSpeed = 5;
+}

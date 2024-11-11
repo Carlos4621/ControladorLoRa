@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+enum Modes {
+    INDEPENDENT = 0;
+    FIXED_SPEED = 1;
+    AUTONOMOUS = 2;
+}

@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+message Joystick {
+    sint32 axisX = 1;
+    sint32 axisY = 2;
+    bool button = 3;
+}
