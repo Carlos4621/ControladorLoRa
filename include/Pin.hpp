@@ -7,7 +7,7 @@
 
 class Pin {
 public:
-    Pin(uint8_t pin, bool pinMode);
+    Pin(uint8_t pin, uint8_t pinMode);
 
     void begin();
 
@@ -17,7 +17,7 @@ public:
 private:
 
     uint8_t pin_m;
-    bool pinMode_m;
+    uint8_t pinMode_m;
 };
 
 

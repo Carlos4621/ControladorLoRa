@@ -1,8 +1,9 @@
 #include "Pin.hpp"
 
-Pin::Pin(uint8_t pin, bool pinMode) 
+Pin::Pin(uint8_t pin, uint8_t pinMode) 
     : pin_m{ pin }
-    , pinMode_m{ pinMode } {
+    , pinMode_m{ pinMode } 
+{
 }
 
 void Pin::begin() {
