@@ -1,6 +1,6 @@
 #include "ControllerDataDecoder.hpp"
 
-ControllerData ControllerDataDecoder::decode(const std::vector<uint8_t>& encodedData) {
+ControllerData ControllerDataDecoder::decode(std::span<const uint8_t> encodedData) {
     ControllerData msg = ControllerData_init_zero;
 
     pb_istream_t decodeStream = pb_istream_from_buffer(encodedData.data(), encodedData.size());

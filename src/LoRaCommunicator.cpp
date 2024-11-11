@@ -22,13 +22,13 @@ void LoRaCommunicator::initializeRadio(const LoRaParameters& parameters) {
     throwIfError<std::invalid_argument>(radioStatus, "Unable to initialize Radio with the given arguments");
 }
 
-void LoRaCommunicator::sendPackage(const std::vector<uint8_t> &package) {
+void LoRaCommunicator::sendPackage(std::span<const uint8_t> package) {
     const int16_t transmisionStatus{ radio_m.transmit(package.data(), package.size()) };
 
     throwIfError<std::runtime_error>(transmisionStatus, "Unable to send the package");
 }
 
-std::vector<uint8_t> LoRaCommunicator::receivePackage(const size_t timeoutInms) {
+std::vector<uint8_t> LoRaCommunicator::receivePackage(size_t timeoutInms) {
     receivedDataBuffer_m.resize(BUFFER_SIZE);
 
     const int16_t receiveStatus{ attemptReceive(timeoutInms) };
@@ -40,7 +40,7 @@ std::vector<uint8_t> LoRaCommunicator::receivePackage(const size_t timeoutInms) 
     return receivedDataBuffer_m;
 }
 
-int16_t LoRaCommunicator::attemptReceive(const size_t timeoutInms) {
+int16_t LoRaCommunicator::attemptReceive(size_t timeoutInms) {
     const uint32_t startTime{ millis() };
     uint32_t timeElapsed{ 0 };
 

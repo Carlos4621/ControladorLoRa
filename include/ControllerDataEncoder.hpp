@@ -10,6 +10,7 @@
 class ControllerDataEncoder {
 public:
 
+    [[nodiscard]]
     std::vector<uint8_t> encode(const ControllerData& data);
 
 private:

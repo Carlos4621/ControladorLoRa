@@ -7,12 +7,13 @@
 #include "ControllerData.pb.h"
 #include <stdexcept>
 #include <Arduino.h>
+#include <span>
 
 class ControllerDataDecoder {
 public:
     
     [[nodiscard]]
-    ControllerData decode(const std::vector<uint8_t>& encodedData);
+    ControllerData decode(std::span<const uint8_t> encodedData);
 };
 
 #endif // !CONTROLLER_DATA_DECODER_HEADER

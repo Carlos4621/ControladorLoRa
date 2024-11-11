@@ -5,6 +5,7 @@
 #include <heltec_unofficial.h>
 #include <vector>
 #include <stdexcept>
+#include <span>
 
 struct LoRaParameters {
     float frequencyInMHz;
@@ -25,10 +26,10 @@ public:
 
     void initializeRadio(const LoRaParameters& parameters);
 
-    void sendPackage(const std::vector<uint8_t>& package);
+    void sendPackage(std::span<const uint8_t> package);
 
     [[nodiscard]]
-    std::vector<uint8_t> receivePackage(const size_t timeoutInms);
+    std::vector<uint8_t> receivePackage(size_t timeoutInms);
 
 private:
     static constexpr size_t BUFFER_SIZE{ 32 };
@@ -38,16 +39,15 @@ private:
     std::vector<uint8_t> receivedDataBuffer_m;
 
     template<class ExceptionType>
-    void throwIfError(int16_t errorCode, const std::string& message);
+    void throwIfError(int16_t errorCode, std::string_view message);
 
-    int16_t attemptReceive(const size_t timeoutInms);
+    int16_t attemptReceive(size_t timeoutInms);
 };
 
-
 template <class ExceptionType>
-inline void LoRaCommunicator::throwIfError(int16_t errorCode, const std::string &message) {
+inline void LoRaCommunicator::throwIfError(int16_t errorCode, std::string_view message) {
     if (errorCode != RADIOLIB_ERR_NONE) {
-        throw ExceptionType{ message };
+        throw ExceptionType{ message.data() };
     }
 }
 
