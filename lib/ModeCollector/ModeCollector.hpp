@@ -2,6 +2,7 @@
 #ifndef MODE_COLLECTOR_HEADER
 #define MODE_COLLECTOR_HEADER
 
+#include <pb.h>
 #include "Collector.hpp"
 #include "DigitalInput.hpp"
 #include "Modes.pb.h"

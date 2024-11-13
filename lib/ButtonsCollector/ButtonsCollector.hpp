@@ -2,6 +2,7 @@
 #ifndef BUTTONS_COLLERCTOR_HEADER
 #define BUTTONS_COLLERCTOR_HEADER
 
+#include <pb.h>
 #include "Collector.hpp"
 #include "Buttons.pb.h"
 #include "DigitalInput.hpp"

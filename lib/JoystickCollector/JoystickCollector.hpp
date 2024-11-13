@@ -2,6 +2,7 @@
 #ifndef JOYSTIC_COLLECTOR_HEADER
 #define JOYSTIC_COLLECTOR_HEADER
 
+#include <pb.h>
 #include "Collector.hpp"
 #include "AnalogInput.hpp"
 #include "DigitalInput.hpp"
