@@ -11,6 +11,8 @@ public:
 
     void begin();
 
+protected:
+
     [[nodiscard]]
     uint8_t getPin() const noexcept;
 
