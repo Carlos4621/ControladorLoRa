@@ -11,7 +11,7 @@
 
 class ControllerDataDecoder {
 public:
-    
+
     [[nodiscard]]
     ControllerData decode(std::span<const uint8_t> encodedData);
 };
