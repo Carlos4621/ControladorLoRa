@@ -15,7 +15,7 @@ public:
 
 private:
 
-    std::vector<uint8_t> encodeBuffer_m;;
+    std::vector<uint8_t> encodeBuffer_m{};
 };
 
 #endif // !CONTROLLER_DATA_ENCODER_HEADER

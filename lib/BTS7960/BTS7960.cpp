@@ -1,8 +1,8 @@
 #include "BTS7960.hpp"
 
-BTS7960::BTS7960(uint8_t pinRPWM, uint8_t pinLPWM) 
-    : pinRightPWM_m{ pinRPWM } 
-    , pinLeftPWM_m{ pinLPWM }
+BTS7960::BTS7960(uint8_t pinRightPWM, uint8_t pinLeftPWM) 
+    : pinRightPWM_m{ pinRightPWM } 
+    , pinLeftPWM_m{ pinLeftPWM }
 {
 }
 
@@ -24,8 +24,8 @@ void BTS7960::stopMotor() {
     pinLeftPWM_m.write(0);
 }
 
-uint8_t BTS7960::getConvertedAnalogOutput(uint8_t percentage) const noexcept {
-    return ((MAX_ANALOG_OUTPUT * percentage) / 100);
+uint8_t BTS7960::getConvertedAnalogOutput(uint8_t percentage) noexcept {
+    return ((MAX_ANALOG_OUTPUT * percentage) / MAX_PERCENTAGE);
 }
 
 void BTS7960::setRotation(uint8_t percentage, const Direction &direction) {
@@ -51,7 +51,7 @@ void BTS7960::setRotation(uint8_t percentage, const Direction &direction) {
 }
 
 void BTS7960::verifyPercentageRange(uint8_t percentage) {
-    if (percentage > 100) {
+    if (percentage > MAX_PERCENTAGE) {
         #ifdef EXCEPTIONS_ENABLED
         throw std::out_of_range{ "Invalid percentage" };
         #endif

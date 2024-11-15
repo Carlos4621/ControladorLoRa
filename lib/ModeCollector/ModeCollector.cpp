@@ -1,7 +1,7 @@
 #include "ModeCollector.hpp"
 
 ModeCollector::ModeCollector(uint8_t independentModePin, uint8_t fixedModePin, uint8_t autonomousModePin)
-    : independentMode_m{ independentMode_m }
+    : independentMode_m{ independentModePin }
     , fixedMode_m{ fixedModePin }
     , autonomousMode_m{ autonomousModePin }
 {

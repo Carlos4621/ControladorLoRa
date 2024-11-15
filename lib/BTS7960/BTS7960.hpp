@@ -22,11 +22,13 @@ private:
 
     static constexpr uint8_t MAX_ANALOG_OUTPUT{ 255 };
 
+    static constexpr uint8_t MAX_PERCENTAGE{ 100 };
+
     AnalogOutput pinRightPWM_m;
     AnalogOutput pinLeftPWM_m;
 
     [[nodiscard]]
-    uint8_t getConvertedAnalogOutput(uint8_t percentage) const noexcept;
+    static uint8_t getConvertedAnalogOutput(uint8_t percentage) noexcept;
 
     void setRotation(uint8_t percentage, const Direction& direction);
 

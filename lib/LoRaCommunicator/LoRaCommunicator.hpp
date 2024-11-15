@@ -14,7 +14,7 @@ struct LoRaParameters {
     uint8_t spreadingFactor;
     uint8_t codingRate;
     uint8_t syncWord;
-    uint8_t outputPowerInDBm;
+    int8_t outputPowerInDBm;
 
     size_t preambleLength;
 };
@@ -35,7 +35,7 @@ private:
 
     SX1262& radio_m;
 
-    std::vector<uint8_t> receivedDataBuffer_m;
+    std::vector<uint8_t> receivedDataBuffer_m{};
 
     template<class ExceptionType>
     void throwIfError(int16_t errorCode, std::string_view message);

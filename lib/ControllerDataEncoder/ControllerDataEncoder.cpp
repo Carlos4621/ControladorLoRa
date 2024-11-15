@@ -1,6 +1,6 @@
 #include "ControllerDataEncoder.hpp"
 
-std::vector<uint8_t> ControllerDataEncoder::encode(const ControllerData& toEncode) {
+std::vector<uint8_t> ControllerDataEncoder::encode(const ControllerData &toEncode) {
     encodeBuffer_m.resize(ControllerData_size);
 
     pb_ostream_t encodeStream_m = pb_ostream_from_buffer(encodeBuffer_m.data(), encodeBuffer_m.size());

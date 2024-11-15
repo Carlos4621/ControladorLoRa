@@ -6,6 +6,9 @@ GUI::GUI(SSD1306Wire &display)
 }
 
 struct GUI::Style {
+    static constexpr uint8_t DISPLAY_MIDDLE_X_POSITION{ 64 };
+    static constexpr uint8_t DISPLAY_MIDDLE_Y_POSITION{ 32 };
+
     static constexpr uint8_t LEFT_LABEL_X_POSITION{ 17 };
     static constexpr uint8_t LEFT_LABEL_Y_POSITION{ 34 };
 
@@ -53,7 +56,7 @@ void GUI::displayConnectingWaiting() {
 
     display_m.clear();
 
-    display_m.drawString(64, 32, "Conectando...");
+    display_m.drawString(Style::DISPLAY_MIDDLE_X_POSITION, Style::DISPLAY_MIDDLE_Y_POSITION, "Conectando...");
 
     display_m.display();
 }
@@ -63,7 +66,7 @@ void GUI::displayConnectionSuccesfull() {
 
     display_m.clear();
 
-    display_m.drawString(64, 34, "Conectado");
+    display_m.drawString(Style::DISPLAY_MIDDLE_X_POSITION, Style::DISPLAY_MIDDLE_Y_POSITION, "Conectado");
 
     display_m.display();
 }
