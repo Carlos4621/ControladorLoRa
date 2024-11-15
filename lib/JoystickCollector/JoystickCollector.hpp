@@ -25,10 +25,19 @@ public:
     Joystick getData() override;
 
 private:
+    static constexpr int8_t MIN_JOYSTICK_VALUE{ -100 };
+    static constexpr uint8_t MAX_JOYSTICK_VALUE{ 100 };
+
+    static constexpr uint8_t MIN_ANALOG_INPUT{ 0 };
+    static constexpr uint16_t MAX_ANALOG_INPUT{ 4095 };
+
     AnalogInput axisX_m;
     AnalogInput axisY_m;
 
     DigitalInput button_m;
+
+    [[nodiscard]]
+    int8_t getScaledValue(uint16_t toScale);
 };
 
 #endif // !JOYSTIC_COLLECTOR_HEADER

@@ -21,9 +21,14 @@ void JoystickCollector::beginPins() {
 Joystick JoystickCollector::getData() {
     Joystick data = Joystick_init_zero;
 
-    data.axisX = axisX_m.read();
-    data.axisY = axisY_m.read();
+    data.axisX = getScaledValue(axisX_m.read());
+    data.axisY = getScaledValue(axisY_m.read());
+
     data.button = button_m.read();
 
     return data;
+}
+
+int8_t JoystickCollector::getScaledValue(uint16_t toScale) {
+    return map(toScale, MIN_ANALOG_INPUT, MAX_ANALOG_INPUT, MIN_JOYSTICK_VALUE, MAX_JOYSTICK_VALUE + 1);
 }
