@@ -33,9 +33,9 @@ std::vector<uint8_t> LoRaCommunicator::receivePackage(size_t timeoutInms) {
 
     const int16_t receiveStatus{ attemptReceive(timeoutInms) };
 
-    throwIfError<std::runtime_error>(receiveStatus, "Unable to receive the package");
-
     receivedDataBuffer_m.resize(radio_m.getPacketLength(true));
+
+    throwIfError<std::runtime_error>(receiveStatus, "Unable to receive the package");
     
     return receivedDataBuffer_m;
 }

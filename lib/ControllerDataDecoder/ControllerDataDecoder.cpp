@@ -8,7 +8,9 @@ ControllerData ControllerDataDecoder::decode(std::span<const uint8_t> encodedDat
     const bool decodeStatus{ pb_decode(&decodeStream, ControllerData_fields, &msg) };
 
     if(!decodeStatus) {
+        #ifdef EXCEPTIONS_ENABLED
         throw std::runtime_error{ "Unable to decode the data" };
+        #endif
     }
 
     return msg;

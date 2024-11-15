@@ -43,13 +43,17 @@ void BTS7960::setRotation(uint8_t percentage, const Direction &direction) {
         break;
     
     default:
+        #ifdef EXCEPTIONS_ENABLED
         throw std::invalid_argument{ "Case not implemented" };
+        #endif
         break;
     }
 }
 
 void BTS7960::verifyPercentageRange(uint8_t percentage) {
     if (percentage > 100) {
+        #ifdef EXCEPTIONS_ENABLED
         throw std::out_of_range{ "Invalid percentage" };
+        #endif
     }
 }

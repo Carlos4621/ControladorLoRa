@@ -17,7 +17,6 @@ struct LoRaParameters {
     uint8_t outputPowerInDBm;
 
     size_t preambleLength;
-    bool enableCRC;
 };
 
 class LoRaCommunicator {
@@ -47,7 +46,11 @@ private:
 template <class ExceptionType>
 inline void LoRaCommunicator::throwIfError(int16_t errorCode, std::string_view message) {
     if (errorCode != RADIOLIB_ERR_NONE) {
+        #ifdef EXCEPTIONS_ENABLED
         throw ExceptionType{ message.data() };
+        #endif
+
+        receivedDataBuffer_m.clear();
     }
 }
 

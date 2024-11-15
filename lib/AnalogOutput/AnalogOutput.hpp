@@ -8,7 +8,7 @@ class AnalogOutput : public Pin {
 public:
     explicit AnalogOutput(uint8_t pin);
 
-    void write(uint16_t value);
+    void write(int value);
 };
 
 #endif // !ANALOG_OUTPUT_HEADER
