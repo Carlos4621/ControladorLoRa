@@ -76,10 +76,10 @@ void GUI::displayError(std::string_view errorString) {
 
     display_m.clear();
 
-    std::string textToShow{ "Error: " };
+    std::string textToShow{ "Error:\n" };
 
     textToShow.append(errorString);
-    textToShow.append("\nPlease restart");
+    textToShow.append("\n\nPlease restart");
 
     display_m.write(textToShow.c_str());
 }
@@ -94,7 +94,7 @@ void GUI::showGUI(const GUIData& data) {
    
     displaySelectedMode(data.selectedMode);
     displayFixedValue(data.fixedValue);
-;
+
     displayRSSIData(data.RSSI);
     displaySNRData(data.SNR);
     
