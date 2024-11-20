@@ -15,14 +15,14 @@ public:
     int32_t getData() override;
 
 private:
-    static constexpr uint16_t MIN_ANALOG_VALUE{ 0 };
+    static constexpr uint8_t MIN_ANALOG_VALUE{ 0 };
     static constexpr uint16_t MAX_ANALOG_VALUE{ 4095 };
 
-    static constexpr uint16_t MIN_FIXED_VALUE{ 0 };
-    static constexpr uint16_t MAX_FIXED_VALUE{ 100 };
+    static constexpr uint8_t MIN_FIXED_VALUE{ 0 };
+    static constexpr uint8_t MAX_FIXED_VALUE{ 100 };
 
     AnalogInput fixedSpeed_m;
-
+    
 };
 
 #endif // !FIXED_SPEED_HEADER
