@@ -79,6 +79,7 @@ void GUI::displayError(std::string_view errorString) {
     std::string textToShow{ "Error: " };
 
     textToShow.append(errorString);
+    textToShow.append("\nPlease restart");
 
     display_m.write(textToShow.c_str());
 }
