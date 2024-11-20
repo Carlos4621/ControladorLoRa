@@ -6,10 +6,11 @@
 #include "LoRaCommunicator.hpp"
 #include "GUI.hpp"
 #include "ControllerDataDecoder.hpp"
+#include "MotorController.hpp"
 
 class Receptor {
 public:
-    Receptor(SX1262& radio, SSD1306Wire& display, const BTS7960Pins& rightMotorPins, const BTS7960& leftMotorPins);
+    Receptor(SX1262& radio, SSD1306Wire& display, const BTS7960Pins& rightMotorPins, const BTS7960Pins& leftMotorPins, const BTS7960Pins& handMotorPins);
 
     void initializeBTS7960Pins();
     void initializeRadio(const LoRaParameters& params);
@@ -25,13 +26,7 @@ private:
 
     ControllerDataDecoder decoder_m;
     
-    BTS7960 rightMotor_m;
-    BTS7960 leftMotor_m;
-
-    void updateMotorsData(const ControllerData& data);
-
-    void applyOnIndependentMode(const ControllerData& data);
-    void applyOnFixedSpeedMode(const ControllerData& data);
+    MotorController motorController_m;
 
     void showDataOnGUI(const ControllerData& data);
 
