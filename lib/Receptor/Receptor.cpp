@@ -21,18 +21,17 @@ void Receptor::initializeRadio(const LoRaParameters &params) {
 }
 
 void Receptor::start() {
-    std::vector<uint8_t> receivedPackage;
-    ControllerData decodedPackage;
+    std::optional<std::vector<uint8_t>> receivedPackage;
 
     while (true) {
         try {
             receivedPackage = std::move(radio_m.receivePackage(RECEIVE_PACKAGE_TIMEOUT));
 
-            if (receivedPackage.empty()) {
+            if (!receivedPackage.has_value()) {
                 manageReconnection();
             }
             else {
-                applyReceivedPackage(receivedPackage);
+                applyReceivedPackage(receivedPackage.value());
             }
         }
         catch(const std::exception& e) {

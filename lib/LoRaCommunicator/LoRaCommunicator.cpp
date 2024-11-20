@@ -28,14 +28,18 @@ void LoRaCommunicator::sendPackage(std::span<const uint8_t> package) {
     throwIfError<std::runtime_error>(transmisionStatus, "Unable to send the package");
 }
 
-std::vector<uint8_t> LoRaCommunicator::receivePackage(size_t timeoutInms) {
+std::optional<std::vector<uint8_t>> LoRaCommunicator::receivePackage(size_t timeoutInms) {
     receivedDataBuffer_m.resize(BUFFER_SIZE);
 
     const int16_t receiveStatus{ attemptReceive(timeoutInms) };
 
-    receivedDataBuffer_m.resize(radio_m.getPacketLength(true));
+    if (receiveStatus == RADIOLIB_ERR_RX_TIMEOUT) {
+        return std::nullopt;
+    }
 
-    manageReceivedPackageStatus(receiveStatus);
+    throwIfError<std::runtime_error>(receiveStatus, "Unable to receive the package");
+
+    receivedDataBuffer_m.resize(radio_m.getPacketLength(true));
 
     return receivedDataBuffer_m;
 }
@@ -63,12 +67,3 @@ int16_t LoRaCommunicator::attemptReceive(size_t timeoutInms) {
     return receiveStatus;
 }
 
-void LoRaCommunicator::manageReceivedPackageStatus(int16_t receiveStatus) {
-    if (receiveStatus == RADIOLIB_ERR_RX_TIMEOUT) {
-        receivedDataBuffer_m.clear();
-    }
-    else {
-        throwIfError<std::runtime_error>(receiveStatus, "Unable to receive the package" );
-    }
-    
-}

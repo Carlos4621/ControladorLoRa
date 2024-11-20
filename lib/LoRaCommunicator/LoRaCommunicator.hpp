@@ -6,6 +6,7 @@
 #include <vector>
 #include <stdexcept>
 #include <span>
+#include <optional>
 
 struct LoRaParameters {
     float frequencyInMHz;
@@ -28,7 +29,7 @@ public:
     void sendPackage(std::span<const uint8_t> package);
 
     [[nodiscard]]
-    std::vector<uint8_t> receivePackage(size_t timeoutInms);
+    std::optional<std::vector<uint8_t>> receivePackage(size_t timeoutInms);
 
     [[nodiscard]]
     float getLastRSSI() const noexcept;
@@ -44,18 +45,14 @@ private:
     std::vector<uint8_t> receivedDataBuffer_m{};
 
     template<class ExceptionType>
-    void throwIfError(int16_t errorCode, std::string_view message);
+    static void throwIfError(int16_t errorCode, std::string_view message);
 
     int16_t attemptReceive(size_t timeoutInms);
-
-    void manageReceivedPackageStatus(int16_t receiveStatus);
 };
 
 template <class ExceptionType>
 inline void LoRaCommunicator::throwIfError(int16_t errorCode, std::string_view message) {
     if (errorCode != RADIOLIB_ERR_NONE) {
-        receivedDataBuffer_m.clear();
-
         throw ExceptionType{ message.data() };
     }
 }
