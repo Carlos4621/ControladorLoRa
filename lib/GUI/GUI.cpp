@@ -79,24 +79,32 @@ void GUI::displayError(std::string_view errorString) {
     std::string textToShow{ "Error:\n" };
 
     textToShow.append(errorString);
-    textToShow.append("\n\nPlease restart");
+    textToShow.append("\n\nPlease restartt");
 
     display_m.write(textToShow.c_str());
 }
 
-void GUI::showGUI(const GUIData& data) {
+void GUI::showGUI(const ControllerData& controllerData, float RSSI, float SNR) {
     configureGUIFont();
 
     display_m.clear();
 
-    displayLeftMotorData(data.leftMotorValue);
-    displayRightMotorData(data.rightMotorValue);
-   
-    displaySelectedMode(data.selectedMode);
-    displayFixedValue(data.fixedValue);
+    if (controllerData.selectedMode == Modes::Modes_FIXED_SPEED) {
+        auto [rightMotorValue, leftMotorValue] = MotorController::getFixedSpeedValuesConverted(controllerData);
 
-    displayRSSIData(data.RSSI);
-    displaySNRData(data.SNR);
+        displayLeftMotorData(leftMotorValue);
+        displayRightMotorData(rightMotorValue);
+    }
+    else {
+        displayLeftMotorData(controllerData.leftJoystick.axisY);
+        displayRightMotorData(controllerData.rightJoystick.axisY);
+    }
+
+    displaySelectedMode(controllerData.selectedMode);
+    displayFixedValue(controllerData.fixedSpeed);
+
+    displayRSSIData(RSSI);
+    displaySNRData(SNR);
     
     display_m.display();
 }

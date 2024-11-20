@@ -7,17 +7,7 @@
 #include "Modes.pb.h"
 #include <heltec_unofficial.h>
 #include <string>
-
-struct GUIData {
-    float RSSI;
-    float SNR;
-    Modes selectedMode;
-    int8_t rightMotorValue;
-    int8_t leftMotorValue;
-    int8_t fixedValue;
-
-    Buttons buttons;
-};
+#include "MotorController.hpp"
 
 class GUI {
 public:
@@ -29,10 +19,9 @@ public:
 
     void displayError(std::string_view errorString);
 
-    void showGUI(const GUIData& data);
+    void showGUI(const ControllerData& controllerData, float RSSI, float SNR);
 
 private:
-
     struct Style;
 
     SSD1306Wire& display_m;
