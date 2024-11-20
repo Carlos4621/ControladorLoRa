@@ -35,9 +35,17 @@ std::vector<uint8_t> LoRaCommunicator::receivePackage(size_t timeoutInms) {
 
     receivedDataBuffer_m.resize(radio_m.getPacketLength(true));
 
-    throwIfError<std::runtime_error>(receiveStatus, "Unable to receive the package");
-    
+    manageReceivedPackageStatus(receiveStatus);
+
     return receivedDataBuffer_m;
+}
+
+float LoRaCommunicator::getLastRSSI() const noexcept {
+    return radio_m.getRSSI(true);
+}
+
+float LoRaCommunicator::getLastSNR() const noexcept {
+    return radio_m.getSNR();
 }
 
 int16_t LoRaCommunicator::attemptReceive(size_t timeoutInms) {
@@ -50,8 +58,17 @@ int16_t LoRaCommunicator::attemptReceive(size_t timeoutInms) {
         receiveStatus = radio_m.receive(receivedDataBuffer_m.data(), receivedDataBuffer_m.size());
 
         timeElapsed = (millis() - startTime);
-        delay(1);
     }
 
     return receiveStatus;
+}
+
+void LoRaCommunicator::manageReceivedPackageStatus(int16_t receiveStatus) {
+    if (receiveStatus == RADIOLIB_ERR_RX_TIMEOUT) {
+        receivedDataBuffer_m.clear();
+    }
+    else {
+        throwIfError<std::runtime_error>(receiveStatus, "Unable to receive the package" );
+    }
+    
 }

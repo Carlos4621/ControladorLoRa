@@ -30,6 +30,12 @@ public:
     [[nodiscard]]
     std::vector<uint8_t> receivePackage(size_t timeoutInms);
 
+    [[nodiscard]]
+    float getLastRSSI() const noexcept;
+
+    [[nodiscard]]
+    float getLastSNR() const noexcept;
+
 private:
     static constexpr size_t BUFFER_SIZE{ 32 };
 
@@ -41,14 +47,16 @@ private:
     void throwIfError(int16_t errorCode, std::string_view message);
 
     int16_t attemptReceive(size_t timeoutInms);
+
+    void manageReceivedPackageStatus(int16_t receiveStatus);
 };
 
 template <class ExceptionType>
 inline void LoRaCommunicator::throwIfError(int16_t errorCode, std::string_view message) {
     if (errorCode != RADIOLIB_ERR_NONE) {
-        throw ExceptionType{ message.data() };
-
         receivedDataBuffer_m.clear();
+
+        throw ExceptionType{ message.data() };
     }
 }
 
