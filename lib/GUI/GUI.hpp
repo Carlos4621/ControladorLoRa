@@ -23,9 +23,11 @@ class GUI {
 public:
     explicit GUI(SSD1306Wire& display);
 
-    void displayConnectingWaiting();
+    void displayWaitingConnection();
 
     void displayConnectionSuccesfull();
+
+    void displayError(std::string_view errorString);
 
     void showGUI(const GUIData& data);
 
@@ -37,6 +39,7 @@ private:
 
     void configureConnectingWaitingFont();
     void configureConnectionSuccesfullFont();
+    void configureErrorFont();
     void configureGUIFont();
 
     void displayRightMotorData(int8_t value);

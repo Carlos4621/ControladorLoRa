@@ -51,7 +51,7 @@ struct GUI::Style {
     static constexpr uint8_t SNR_VALUE_Y_POSITION{ 12 };
 };
 
-void GUI::displayConnectingWaiting() {
+void GUI::displayWaitingConnection() {
     configureConnectingWaitingFont();
 
     display_m.clear();
@@ -69,6 +69,18 @@ void GUI::displayConnectionSuccesfull() {
     display_m.drawString(Style::DISPLAY_MIDDLE_X_POSITION, Style::DISPLAY_MIDDLE_Y_POSITION, "Conectado");
 
     display_m.display();
+}
+
+void GUI::displayError(std::string_view errorString) {
+    configureErrorFont();
+
+    display_m.clear();
+
+    std::string textToShow{ "Error: " };
+
+    textToShow.append(errorString);
+
+    display_m.write(textToShow.c_str());
 }
 
 void GUI::showGUI(const GUIData& data) {
@@ -96,6 +108,11 @@ void GUI::configureConnectingWaitingFont() {
 void GUI::configureConnectionSuccesfullFont() {
     display_m.setFont(ArialMT_Plain_24);
     display_m.setTextAlignment(TEXT_ALIGN_CENTER_BOTH);
+}
+
+void GUI::configureErrorFont() {
+    display_m.setFont(ArialMT_Plain_10);
+    display.setTextAlignment(TEXT_ALIGN_LEFT);
 }
 
 void GUI::configureGUIFont() {
