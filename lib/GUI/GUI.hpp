@@ -2,21 +2,21 @@
 #ifndef DISPLAY_HEADER
 #define DISPLAY_HEADER
 
+#include <pb.h>
+#include "Buttons.pb.h"
+#include "Modes.pb.h"
 #include <heltec_unofficial.h>
 #include <string>
 
 struct GUIData {
     float RSSI;
     float SNR;
-    uint8_t selectedMode;
+    Modes selectedMode;
     int8_t rightMotorValue;
     int8_t leftMotorValue;
     int8_t fixedValue;
 
-    bool buttonA;
-    bool buttonB;
-    bool buttonX;
-    bool buttonY;
+    Buttons buttons;
 };
 
 class GUI {
