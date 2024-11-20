@@ -31,6 +31,8 @@ private:
     static constexpr uint8_t MIN_ANALOG_INPUT{ 0 };
     static constexpr uint16_t MAX_ANALOG_INPUT{ 4095 };
 
+    static constexpr uint8_t DEAD_ZONE{ 10 };
+
     AnalogInput axisX_m;
     AnalogInput axisY_m;
 
@@ -38,6 +40,9 @@ private:
 
     [[nodiscard]]
     int8_t getScaledValue(uint16_t toScale);
+
+    [[nodiscard]]
+    int8_t getAppliedDeadZone(int8_t toApply);
 };
 
 #endif // !JOYSTIC_COLLECTOR_HEADER

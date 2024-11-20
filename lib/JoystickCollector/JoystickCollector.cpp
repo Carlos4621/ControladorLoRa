@@ -21,8 +21,13 @@ void JoystickCollector::beginPins() {
 Joystick JoystickCollector::getData() {
     Joystick data = Joystick_init_zero;
 
-    data.axisX = getScaledValue(axisX_m.read());
-    data.axisY = getScaledValue(axisY_m.read());
+    int8_t scaledValue{ getScaledValue(axisX_m.read()) };
+
+    data.axisX = getAppliedDeadZone(scaledValue);
+
+    scaledValue = getScaledValue(axisY_m.read());
+
+    data.axisY = getAppliedDeadZone(scaledValue);
 
     data.button = button_m.read();
 
@@ -30,5 +35,13 @@ Joystick JoystickCollector::getData() {
 }
 
 int8_t JoystickCollector::getScaledValue(uint16_t toScale) {
-    return map(toScale, MIN_ANALOG_INPUT, MAX_ANALOG_INPUT, MIN_JOYSTICK_VALUE, MAX_JOYSTICK_VALUE + 1);
+    return map(toScale, MIN_ANALOG_INPUT, MAX_ANALOG_INPUT, MIN_JOYSTICK_VALUE, MAX_JOYSTICK_VALUE);
+}
+
+int8_t JoystickCollector::getAppliedDeadZone(int8_t toApply) {
+    if (toApply < -DEAD_ZONE || toApply > DEAD_ZONE) {
+        return toApply;
+    }
+
+    return 0;
 }
