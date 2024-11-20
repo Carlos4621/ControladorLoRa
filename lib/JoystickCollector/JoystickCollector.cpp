@@ -21,13 +21,8 @@ void JoystickCollector::beginPins() {
 Joystick JoystickCollector::getData() {
     Joystick data = Joystick_init_zero;
 
-    int8_t scaledValue{ getScaledValue(axisX_m.read()) };
-
-    data.axisX = getAppliedDeadZone(scaledValue);
-
-    scaledValue = getScaledValue(axisY_m.read());
-
-    data.axisY = getAppliedDeadZone(scaledValue);
+    data.axisX = processAxisData(axisX_m);
+    data.axisY = processAxisData(axisY_m);
 
     data.button = button_m.read();
 
@@ -44,4 +39,11 @@ int8_t JoystickCollector::getAppliedDeadZone(int8_t toApply) {
     }
 
     return 0;
+}
+
+int8_t JoystickCollector::processAxisData(const AnalogInput &axis) {
+    const auto rawAxisData{ axis.read() };
+    const auto scaledAxis{ getScaledValue(rawAxisData) };
+
+    return getAppliedDeadZone(scaledAxis);
 }

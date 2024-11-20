@@ -39,10 +39,13 @@ private:
     DigitalInput button_m;
 
     [[nodiscard]]
-    int8_t getScaledValue(uint16_t toScale);
+    static int8_t getScaledValue(uint16_t toScale);
 
     [[nodiscard]]
-    int8_t getAppliedDeadZone(int8_t toApply);
+    static int8_t getAppliedDeadZone(int8_t toApply);
+
+    [[nodiscard]]
+    static int8_t processAxisData(const AnalogInput& axis);
 };
 
 #endif // !JOYSTIC_COLLECTOR_HEADER
