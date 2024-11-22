@@ -33,7 +33,7 @@ std::optional<std::vector<uint8_t>> LoRaCommunicator::receivePackage(size_t time
 
     const int16_t receiveStatus{ attemptReceive(timeoutInms) };
 
-    if (receiveStatus == RADIOLIB_ERR_RX_TIMEOUT) {
+    if (isRecuperableError(receiveStatus)) {
         return std::nullopt;
     }
 
@@ -67,3 +67,6 @@ int16_t LoRaCommunicator::attemptReceive(size_t timeoutInms) {
     return receiveStatus;
 }
 
+bool LoRaCommunicator::isRecuperableError(int16_t errorCode) noexcept {
+    return (errorCode == RADIOLIB_ERR_RX_TIMEOUT) || (errorCode == RADIOLIB_ERR_CRC_MISMATCH);
+}

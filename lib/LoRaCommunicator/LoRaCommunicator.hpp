@@ -48,12 +48,14 @@ private:
     static void throwIfError(int16_t errorCode, std::string_view message);
 
     int16_t attemptReceive(size_t timeoutInms);
+
+    static bool isRecuperableError(int16_t errorCode) noexcept;
 };
 
 template <class ExceptionType>
 inline void LoRaCommunicator::throwIfError(int16_t errorCode, std::string_view message) {
     if (errorCode != RADIOLIB_ERR_NONE) {
-        throw ExceptionType{ message.data() };
+        throw ExceptionType{ std::string(message.data()) + "\n" + std::to_string(errorCode) };
     }
 }
 
