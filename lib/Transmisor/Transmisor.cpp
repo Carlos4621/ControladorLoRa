@@ -1,0 +1,35 @@
+#include "Transmisor.hpp"
+
+Transmisor::Transmisor(SX1262 &radio, SSD1306Wire &display, const JoystickPins &rightJoystickPins, const JoystickPins &leftJoystickPins, 
+const ButtonsPins &buttonsPins, const ModeSelectionPins &modeSelectionPins, uint8_t fixedSpeedPin)
+    : radio_m{ radio }
+    , gui_m{ display }
+    , collector_m{ rightJoystickPins, leftJoystickPins, buttonsPins, modeSelectionPins, fixedSpeedPin }
+{
+}
+
+void Transmisor::initializeRadio(const LoRaParameters &params) {
+    radio_m.initializeRadio(params);
+}
+
+void Transmisor::initializePins() {
+    collector_m.beginComponents();
+}
+
+void Transmisor::start() {
+    ControllerData data;
+    std::vector<uint8_t> encodedData;
+
+    while (true) {
+        data = std::move(collector_m.getControllerData());
+
+        gui_m.showGUI(data, radio_m.getLastRSSI(), radio_m.getLastSNR());
+
+        encodedData = std::move(encoder_m.encode(data));
+
+        radio_m.sendPackage(encodedData);
+
+        delay(50);
+    }
+    
+}
