@@ -25,8 +25,6 @@ void BTS7960::setAntihoraryRotation(uint8_t percentage) {
 }
 
 void BTS7960::setRelativeRotation(int percentage) {
-    verifyPercentageRange(percentage);
-
     if (percentage > 0) {
         setHoraryRotation(percentage);
     }
@@ -48,7 +46,7 @@ uint8_t BTS7960::getConvertedAnalogOutput(uint8_t percentage) noexcept {
 }
 
 void BTS7960::setRotation(uint8_t percentage, const Direction &direction) {
-    verifyPercentageRange(percentage);
+    verifyPercentageRange(static_cast<int8_t>(percentage));
 
     stopMotor();
 

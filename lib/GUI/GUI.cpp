@@ -96,12 +96,12 @@ void GUI::showGUI(const ControllerData& controllerData, float RSSI, float SNR) {
         displayRightMotorData(rightMotorValue);
     }
     else {
-        displayLeftMotorData(controllerData.leftJoystick.axisY);
-        displayRightMotorData(controllerData.rightJoystick.axisY);
+        displayLeftMotorData(static_cast<int8_t>(controllerData.leftJoystick.axisY));
+        displayRightMotorData(static_cast<int8_t>(controllerData.rightJoystick.axisY));
     }
 
     displaySelectedMode(controllerData.selectedMode);
-    displayFixedValue(controllerData.fixedSpeed);
+    displayFixedValue(static_cast<int8_t>(controllerData.fixedSpeed));
 
     displayRSSIData(RSSI);
     displaySNRData(SNR);

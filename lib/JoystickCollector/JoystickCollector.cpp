@@ -30,7 +30,7 @@ Joystick JoystickCollector::getData() {
 }
 
 int8_t JoystickCollector::getScaledValue(uint16_t toScale) {
-    return map(toScale, MIN_ANALOG_INPUT, MAX_ANALOG_INPUT, MIN_JOYSTICK_VALUE, MAX_JOYSTICK_VALUE);
+    return static_cast<int8_t>(map(toScale, MIN_ANALOG_INPUT, MAX_ANALOG_INPUT, MIN_JOYSTICK_VALUE, MAX_JOYSTICK_VALUE));
 }
 
 int8_t JoystickCollector::getAppliedDeadZone(int8_t toApply) {
