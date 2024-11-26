@@ -13,7 +13,7 @@ public:
     ControllerCollector(const JoystickPins& rightJoystickPins, const JoystickPins& leftJoystickPins, const ButtonsPins& buttonsPins
         , const ModeSelectionPins& modeSelectionPins, uint8_t fixedSpeedPin);
 
-    void beginComponents();
+    void beginPins();
 
     [[nodiscard]]
     ControllerData getControllerData();

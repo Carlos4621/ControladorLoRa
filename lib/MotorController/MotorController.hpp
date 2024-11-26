@@ -10,7 +10,7 @@ class MotorController {
 public:
     MotorController(const BTS7960Pins& rightMotorPins, const BTS7960Pins& leftMotorPins, const BTS7960Pins& handMotorPins);
 
-    void initializeBTS7960s();
+    void beginPins();
 
     void applyMotorData(const ControllerData& dataToApply);
 

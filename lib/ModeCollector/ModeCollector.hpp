@@ -20,6 +20,7 @@ public:
 
     void beginPins() override;
 
+    [[nodiscard]]
     Modes getData() override;
 
 private:

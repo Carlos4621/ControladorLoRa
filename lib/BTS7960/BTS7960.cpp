@@ -11,7 +11,7 @@ BTS7960::BTS7960(const BTS7960Pins& pins)
 {
 }
 
-void BTS7960::configurePins() {
+void BTS7960::beginPins() {
     pinRightPWM_m.begin();
     pinLeftPWM_m.begin();
 }

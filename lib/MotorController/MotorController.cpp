@@ -7,10 +7,10 @@ MotorController::MotorController(const BTS7960Pins& rightMotorPins, const BTS796
 {
 }
 
-void MotorController::initializeBTS7960s() {
-    rightMotor_m.configurePins();
-    leftMotor_m.configurePins();
-    handMotor_m.configurePins();
+void MotorController::beginPins() {
+    rightMotor_m.beginPins();
+    leftMotor_m.beginPins();
+    handMotor_m.beginPins();
 }
 
 void MotorController::applyMotorData(const ControllerData &dataToApply) {

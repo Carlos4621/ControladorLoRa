@@ -16,7 +16,7 @@ public:
     BTS7960(uint8_t pinRightPWM, uint8_t pinLeftPWM);
     explicit BTS7960(const BTS7960Pins& pins);
 
-    void configurePins();
+    void beginPins();
 
     void setHoraryRotation(uint8_t percentage);
     void setAntihoraryRotation(uint8_t percentage);

@@ -8,7 +8,7 @@ Receptor::Receptor(SX1262 &radio, SSD1306Wire &display, const BTS7960Pins &right
 }
 
 void Receptor::initializeBTS7960Pins() {
-    motorController_m.initializeBTS7960s();
+    motorController_m.beginPins();
 }
 
 void Receptor::initializeRadio(const LoRaParameters &params) {
