@@ -8,19 +8,32 @@
 #include "DigitalInput.hpp"
 #include "Joystick.pb.h"
 
+/// @brief Struct con los pines del joystick
 struct JoystickPins {
     uint8_t axisXPin;
     uint8_t axisYPin;
     uint8_t buttonPin;
 };
 
+/// @brief Clase que recolecta el estado de los pines de un joystick
 class JoystickCollector : public Collector<Joystick> {
 public:
+
+    /// @brief Constructor base
+    /// @param axisXPin Pin del eje X del joystick
+    /// @param axisYPin Pin del eje Y del joystick
+    /// @param buttonPin Pin del botón del joystick
     JoystickCollector(uint8_t axisXPin, uint8_t axisYPin, uint8_t buttonPin);
+
+    /// @brief Constructor con struct
+    /// @param pins Pines a usar
     explicit JoystickCollector(const JoystickPins& pins);
 
+    /// @brief Inicializa los pines a usar
     void beginPins() override;
 
+    /// @brief Obtiene el estado actual del joystick
+    /// @return El estado actual del joystick
     [[nodiscard]]
     Joystick getData() override;
 

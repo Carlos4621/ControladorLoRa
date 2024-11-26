@@ -9,9 +9,13 @@
 #include <Arduino.h>
 #include <span>
 
+/// @brief Decodificador de ControllerData
 class ControllerDataDecoder {
 public:
 
+    /// @brief Decodifica una serie de bytes en un ControllerData
+    /// @param encodedData Data a decodificar
+    /// @return Datos decodificados
     [[nodiscard]]
     static ControllerData decode(std::span<const uint8_t> encodedData);
 };

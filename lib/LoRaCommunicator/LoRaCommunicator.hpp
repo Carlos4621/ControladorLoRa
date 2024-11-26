@@ -8,6 +8,7 @@
 #include <span>
 #include <optional>
 
+/// @brief Struct con los parámetros de un radio LoRa
 struct LoRaParameters {
     float frequencyInMHz;
     float bandwidthInKHz;
@@ -20,20 +21,35 @@ struct LoRaParameters {
     size_t preambleLength;
 };
 
+/// @brief Clase encargada del envío y recibo de series de bytes
 class LoRaCommunicator {
 public:
+
+    /// @brief Constructor base
+    /// @param radio Radio a usar
     explicit LoRaCommunicator(SX1262& radio);
 
+    /// @brief Inicializa el radio con los parámetros dados
+    /// @param parameters Parámetros a usar
     void initializeRadio(const LoRaParameters& parameters);
 
+    /// @brief Envía una serie de bytes
+    /// @param package Serie de bytes a enviar
     void sendPackage(std::span<const uint8_t> package);
 
+    /// @brief Intenta recibir una serie de bytes, en caso de timeout devuelve std::nullopt
+    /// @param timeoutInms Tiempo de espera antes de considerar como no recibido
+    /// @return Paquete recibido en caso satisfactorio, sino std::nullopt
     [[nodiscard]]
     std::optional<std::vector<uint8_t>> receivePackage(size_t timeoutInms);
 
+    /// @brief Obtiene el RSSI del último paquete enviado o recibido
+    /// @return RSSI del último paquete enviado o recibido
     [[nodiscard]]
     float getLastRSSI() const noexcept;
 
+    /// @brief Obtiene el SNR del último paquete enviado o recibido
+    /// @return SNR del último paquete enviado o recibido
     [[nodiscard]]
     float getLastSNR() const noexcept;
 

@@ -7,9 +7,13 @@
 #include "ControllerData.pb.h"
 #include <stdexcept>
 
+/// @brief Codificador de ControllerData
 class ControllerDataEncoder {
 public:
 
+    /// @brief Codifica un ControllerData en una serie de bytes
+    /// @param data Data a codificar
+    /// @return Data codificada
     [[nodiscard]]
     std::vector<uint8_t> encode(const ControllerData& data);
 

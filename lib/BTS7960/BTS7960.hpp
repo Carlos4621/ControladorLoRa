@@ -6,23 +6,41 @@
 #include "AnalogOutput.hpp"
 #include <stdexcept>
 
+/// @brief Pines para un objeto BTS7960
 struct BTS7960Pins {
     uint8_t pinRightPWM;
     uint8_t pinLeftPWM;
 };
 
+/// @brief Representación de un driver de motor BTS7960
 class BTS7960 {
 public:
+
+    /// @brief Constructor base
+    /// @param pinRightPWM Pin GPIO de la entrada RPWM del driver
+    /// @param pinLeftPWM Pin GPIO de la entrada LPWM del driver
     BTS7960(uint8_t pinRightPWM, uint8_t pinLeftPWM);
+
+    /// @brief Constructor con struct
+    /// @param pins Struct con los pines a usar
     explicit BTS7960(const BTS7960Pins& pins);
 
+    /// @brief Inicializa los pines a usar
     void beginPins();
 
+    /// @brief Escribe en la entrada RPWM del driver
+    /// @param percentage Porcentaje de la potencia del giro. Si percentage > 100 lanza std::out_of_range
     void setHoraryRotation(uint8_t percentage);
+
+    /// @brief Escribe en la entrada LPWM del driver
+    /// @param percentage Porcentaje de la potencia del giro. Si percentage > 100 lanza std::out_of_range
     void setAntihoraryRotation(uint8_t percentage);
 
+    /// @brief Escribe en la estrada RPWM o LPWM dependiendo del signo del porcentaje. Si percentage > 0 entonces RPWM, si percentage < 0 entonces LPWM
+    /// @param percentage Porcentaje relativo del giro. Si percentage < -100 || percentage > 100 lanza std::out_of_range
     void setRelativeRotation(int percentage);
 
+    /// @brief Establece en 0 las dos entradas RPWM y LPWM del driver
     void stopMotor();
 
 private:

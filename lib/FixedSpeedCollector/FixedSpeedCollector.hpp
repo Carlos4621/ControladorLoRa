@@ -5,12 +5,19 @@
 #include "Collector.hpp"
 #include "AnalogInput.hpp"
 
+/// @brief Collector del fixed speed
 class FixedSpeedCollector : public Collector<int32_t> {
 public:
+
+    /// @brief Constructor base
+    /// @param fixedSpeedPin Número GPIO del pin a usar
     FixedSpeedCollector(uint8_t fixedSpeedPin);
 
+    /// @brief Inicializa el pin a usar
     void beginPins() override;
 
+    /// @brief Obtiene el estado actual del pin
+    /// @return El estado actual del pin
     [[nodiscard]]
     int32_t getData() override;
 

@@ -2,6 +2,8 @@
 #ifndef COLLECTOR_HEADER
 #define COLLECTOR_HEADER
 
+/// @brief Clase para la obtención de datos de un conjunto de pines
+/// @tparam T Tipo de dato que devolverá al leer
 template<class T>
 class Collector {
 public:
@@ -14,9 +16,12 @@ public:
     Collector& operator=(const Collector&) = default;
     Collector& operator=(Collector&&) noexcept = default;
 
+    /// @brief Obtiene y devuelve los estados actuales
+    /// @return El estado actual de los pines
     [[nodiscard]]
     virtual T getData() = 0;
 
+    /// @brief Inicializa los pines a usar
     virtual void beginPins() = 0;
 };
 
