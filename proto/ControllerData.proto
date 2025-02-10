@@ -7,10 +7,11 @@ import "Modes.proto";
 message ControllerData {
     Joystick leftJoystick = 1;
     Joystick rightJoystick = 2;
+    Joystick cameraJoystick = 3;
 
-    Buttons buttons = 3;
+    Buttons buttons = 4;
 
-    Modes selectedMode = 4;
+    Modes selectedMode = 5;
 
-    sint32 fixedSpeed = 5;
+    sint32 fixedSpeed = 6;
 }

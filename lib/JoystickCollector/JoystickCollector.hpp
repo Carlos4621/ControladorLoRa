@@ -19,6 +19,8 @@ struct JoystickPins {
 class JoystickCollector : public Collector<Joystick> {
 public:
 
+    // TODO: Añadir parámetro en el constructor para zona muerta, incluyendo un valor default para evitar contratiempos
+
     /// @brief Constructor base
     /// @param axisXPin Pin del eje X del joystick
     /// @param axisYPin Pin del eje Y del joystick

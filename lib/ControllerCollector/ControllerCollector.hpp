@@ -18,8 +18,8 @@ public:
     /// @param buttonsPins Pines de los botones
     /// @param modeSelectionPins Pines del seleccionador de modo
     /// @param fixedSpeedPin Pin del fixed speed
-    ControllerCollector(const JoystickPins& rightJoystickPins, const JoystickPins& leftJoystickPins, const ButtonsPins& buttonsPins
-        , const ModeSelectionPins& modeSelectionPins, uint8_t fixedSpeedPin);
+    ControllerCollector(const JoystickPins& rightJoystickPins, const JoystickPins& leftJoystickPins, const JoystickPins& cameraJoystick,
+        const ButtonsPins& buttonsPins, const ModeSelectionPins& modeSelectionPins, uint8_t fixedSpeedPin);
 
     /// @brief Inicializa los pines a usar
     void beginPins();
@@ -32,6 +32,8 @@ public:
 private:
     JoystickCollector rightJoystick_m;
     JoystickCollector leftJoystick_m;
+
+    JoystickCollector cameraJoystick_m;
 
     FixedSpeedCollector fixedSpeed_m;
 

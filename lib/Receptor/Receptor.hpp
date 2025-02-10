@@ -7,10 +7,12 @@
 #include "GUI.hpp"
 #include "ControllerDataDecoder.hpp"
 #include "MotorController.hpp"
+#include "CameraDirectioner.hpp"
 
 class Receptor {
 public:
-    Receptor(SX1262& radio, SSD1306Wire& display, const BTS7960Pins& rightMotorPins, const BTS7960Pins& leftMotorPins, const BTS7960Pins& handMotorPins);
+    Receptor(SX1262& radio, SSD1306Wire& display, const BTS7960Pins& rightMotorPins, const BTS7960Pins& leftMotorPins, const BTS7960Pins& handMotorPins, 
+        uint8_t horizontalCameraServoPin, uint8_t verticalCameraServoPin);
 
     void initializeBTS7960Pins();
     void initializeRadio(const LoRaParameters& params);
@@ -19,7 +21,7 @@ public:
     void start();
 
 private:
-    static constexpr size_t RECEIVE_PACKAGE_TIMEOUT{ 200 };
+    static constexpr size_t ReceivePackageTimeoutInMs{ 200 };
 
     GUI gui_m;
     LoRaCommunicator radio_m;
@@ -27,6 +29,7 @@ private:
     ControllerDataDecoder decoder_m;
     
     MotorController motorController_m;
+    CameraDirectioner cameraDirectioner_m;
 
     void showDataOnGUI(const ControllerData& data);
 

@@ -33,6 +33,7 @@ void MotorController::applyMotorData(const ControllerData &dataToApply) {
     }
 }
 
+// TODO: Hacer más legible este método
 std::pair<int8_t, int8_t> MotorController::getFixedSpeedValuesConverted(const ControllerData &dataToConvert) noexcept {
     int8_t rightSpeed{ 0 };
     int8_t leftSpeed{ 0 };
@@ -47,7 +48,7 @@ std::pair<int8_t, int8_t> MotorController::getFixedSpeedValuesConverted(const Co
         leftSpeed = (dataToConvert.rightJoystick.axisX > 0) ? -dataToConvert.fixedSpeed : dataToConvert.fixedSpeed;
     }
 
-    return { rightSpeed, leftSpeed };
+    return std::make_pair(rightSpeed, leftSpeed);
 }
 
 void MotorController::applyOnIndependentMode(const ControllerData &dataToApply) {
@@ -57,7 +58,7 @@ void MotorController::applyOnIndependentMode(const ControllerData &dataToApply) 
 }
 
 void MotorController::applyOnFixedSpeedMode(const ControllerData &dataToApply) {
-    auto [rightSpeed, leftSpeed] = getFixedSpeedValuesConverted(dataToApply);
+    const auto [rightSpeed, leftSpeed] = getFixedSpeedValuesConverted(dataToApply);
 
     rightMotor_m.setRelativeRotation(rightSpeed);
     leftMotor_m.setRelativeRotation(leftSpeed);

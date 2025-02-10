@@ -1,13 +1,16 @@
 #include "Receptor.hpp"
 
-Receptor::Receptor(SX1262 &radio, SSD1306Wire &display, const BTS7960Pins &rightMotorPins, const BTS7960Pins &leftMotorPins, const BTS7960Pins& handMotorPins)
+Receptor::Receptor(SX1262 &radio, SSD1306Wire &display, const BTS7960Pins &rightMotorPins, const BTS7960Pins &leftMotorPins, const BTS7960Pins &handMotorPins, 
+ uint8_t horizontalCameraServoPin, uint8_t verticalCameraServoPin)
     : radio_m{ radio }
     , gui_m{ display }
     , motorController_m{ rightMotorPins, leftMotorPins, handMotorPins }
+    , cameraDirectioner_m{ horizontalCameraServoPin,  verticalCameraServoPin }
 {
 }
 
-void Receptor::initializeBTS7960Pins() {
+void Receptor::initializeBTS7960Pins()
+{
     motorController_m.beginPins();
 }
 
@@ -25,7 +28,7 @@ void Receptor::start() {
 
     while (true) {
         try {
-            receivedPackage = std::move(radio_m.receivePackage(RECEIVE_PACKAGE_TIMEOUT));
+            receivedPackage = std::move(radio_m.receivePackage(ReceivePackageTimeoutInMs));
 
             if (!receivedPackage.has_value()) {
                 manageReconnection();
@@ -51,7 +54,9 @@ void Receptor::manageReconnection() {
 void Receptor::manageError(const std::exception &e) {
     gui_m.displayError(e.what());
 
-    while (true);
+    while (true) {
+        delay(100000);
+    }
 }
 
 void Receptor::applyReceivedPackage(std::span<const uint8_t> receivedPackage) {
@@ -60,4 +65,5 @@ void Receptor::applyReceivedPackage(std::span<const uint8_t> receivedPackage) {
     showDataOnGUI(decodedPackage);
 
     motorController_m.applyMotorData(decodedPackage);
+    cameraDirectioner_m.applyDirectionData(decodedPackage.cameraJoystick);
 }

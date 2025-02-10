@@ -10,7 +10,7 @@
 class Transmisor {
 public:
     Transmisor(SX1262& radio, SSD1306Wire& display, const JoystickPins& rightJoystickPins, const JoystickPins& leftJoystickPins, 
-    const ButtonsPins& buttonsPins, const ModeSelectionPins& modeSelectionPins, uint8_t fixedSpeedPin);
+        const JoystickPins& cameraJoystickPin, const ButtonsPins& buttonsPins, const ModeSelectionPins& modeSelectionPins, uint8_t fixedSpeedPin);
 
     void initializeRadio(const LoRaParameters& params);
 

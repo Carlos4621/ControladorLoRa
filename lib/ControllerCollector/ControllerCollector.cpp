@@ -1,18 +1,20 @@
 #include "ControllerCollector.hpp"
 
-ControllerCollector::ControllerCollector(const JoystickPins &rightJoystickPins, const JoystickPins &leftJoystickPins, const ButtonsPins &buttonsPins
-, const ModeSelectionPins &modeSelectionPins, uint8_t fixedSpeedPin)
+ControllerCollector::ControllerCollector(const JoystickPins &rightJoystickPins, const JoystickPins &leftJoystickPins, const JoystickPins &cameraJoystick, const ButtonsPins &buttonsPins, const ModeSelectionPins &modeSelectionPins, uint8_t fixedSpeedPin)
     : rightJoystick_m{ rightJoystickPins }
     , leftJoystick_m{ leftJoystickPins }
+    , cameraJoystick_m{ cameraJoystick }
     , buttons_m{ buttonsPins }
     , modes_m{ modeSelectionPins }
     , fixedSpeed_m{ fixedSpeedPin }
 {
 }
 
-void ControllerCollector::beginPins() {
+void ControllerCollector::beginPins()
+{
     rightJoystick_m.beginPins();
     leftJoystick_m.beginPins();
+    cameraJoystick_m.beginPins();
     buttons_m.beginPins();
     modes_m.beginPins();
     fixedSpeed_m.beginPins();
@@ -23,6 +25,7 @@ ControllerData ControllerCollector::getControllerData() {
 
     updateJoystickData(data.has_rightJoystick, data.rightJoystick, rightJoystick_m);
     updateJoystickData(data.has_leftJoystick, data.leftJoystick, leftJoystick_m);
+    updateJoystickData(data.has_cameraJoystick, data.cameraJoystick, cameraJoystick_m);
 
     updateButtonsData(data.has_buttons, data.buttons);
 
