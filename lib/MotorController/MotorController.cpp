@@ -33,37 +33,39 @@ void MotorController::applyMotorData(const ControllerData &dataToApply) {
     }
 }
 
-// TODO: Hacer más legible este método
 std::pair<int8_t, int8_t> MotorController::getFixedSpeedValuesConverted(const ControllerData &dataToConvert) noexcept {
     int8_t rightSpeed{ 0 };
     int8_t leftSpeed{ 0 };
 
-    if (dataToConvert.rightJoystick.axisY != 0) {
-        rightSpeed = leftSpeed =
-            (dataToConvert.rightJoystick.axisY > 0) ? dataToConvert.fixedSpeed: -dataToConvert.fixedSpeed;
-    }
-    else if (dataToConvert.rightJoystick.axisX != 0) {
-        rightSpeed = (dataToConvert.rightJoystick.axisX > 0) ? dataToConvert.fixedSpeed : -dataToConvert.fixedSpeed;
+    const auto& fixedSpeed{ dataToConvert.fixedSpeed };
+    const auto& axisY{ dataToConvert.rightJoystick.axisY };
+    const auto& axisX{ dataToConvert.rightJoystick.axisX };
 
-        leftSpeed = (dataToConvert.rightJoystick.axisX > 0) ? -dataToConvert.fixedSpeed : dataToConvert.fixedSpeed;
+    if (axisY != 0) {
+        rightSpeed = leftSpeed = (axisY > 0) ? fixedSpeed : -fixedSpeed;
+    } 
+    else if (axisX != 0) {
+        rightSpeed = (axisX > 0) ? fixedSpeed : -fixedSpeed;
+        leftSpeed  = -rightSpeed;
     }
 
-    return std::make_pair(rightSpeed, leftSpeed);
+    return {rightSpeed, leftSpeed};
 }
 
+
 void MotorController::applyOnIndependentMode(const ControllerData &dataToApply) {
-    rightMotor_m.setRelativeRotation(dataToApply.rightJoystick.axisY);
-    leftMotor_m.setRelativeRotation(dataToApply.leftJoystick.axisY);
+    rightMotor_m.setRelativeSpeed(dataToApply.rightJoystick.axisY);
+    leftMotor_m.setRelativeSpeed(dataToApply.leftJoystick.axisY);
     handMotor_m.stopMotor();
 }
 
 void MotorController::applyOnFixedSpeedMode(const ControllerData &dataToApply) {
     const auto [rightSpeed, leftSpeed] = getFixedSpeedValuesConverted(dataToApply);
 
-    rightMotor_m.setRelativeRotation(rightSpeed);
-    leftMotor_m.setRelativeRotation(leftSpeed);
+    rightMotor_m.setRelativeSpeed(rightSpeed);
+    leftMotor_m.setRelativeSpeed(leftSpeed);
 
-    handMotor_m.setRelativeRotation(dataToApply.leftJoystick.axisY);
+    handMotor_m.setRelativeSpeed(dataToApply.leftJoystick.axisY);
 }
 
 void MotorController::applyOnAutonomousMode() {

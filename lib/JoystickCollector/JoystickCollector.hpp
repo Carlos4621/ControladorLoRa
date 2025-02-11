@@ -19,13 +19,11 @@ struct JoystickPins {
 class JoystickCollector : public Collector<Joystick> {
 public:
 
-    // TODO: Añadir parámetro en el constructor para zona muerta, incluyendo un valor default para evitar contratiempos
-
     /// @brief Constructor base
     /// @param axisXPin Pin del eje X del joystick
     /// @param axisYPin Pin del eje Y del joystick
     /// @param buttonPin Pin del botón del joystick
-    JoystickCollector(uint8_t axisXPin, uint8_t axisYPin, uint8_t buttonPin);
+    JoystickCollector(uint8_t axisXPin, uint8_t axisYPin, uint8_t buttonPin, int8_t deadZone = 10);
 
     /// @brief Constructor con struct
     /// @param pins Pines a usar
@@ -39,6 +37,10 @@ public:
     [[nodiscard]]
     Joystick getData() override;
 
+    /// @brief Cambia la zona muerta
+    /// @param newDeadZone Nueva zona muerta
+    void changeDeadZone(int8_t newDeadZone) noexcept;
+
 private:
     static constexpr int8_t MIN_JOYSTICK_VALUE{ -100 };
     static constexpr uint8_t MAX_JOYSTICK_VALUE{ 100 };
@@ -46,7 +48,7 @@ private:
     static constexpr uint8_t MIN_ANALOG_INPUT{ 0 };
     static constexpr uint16_t MAX_ANALOG_INPUT{ 4095 };
 
-    static constexpr uint8_t DEAD_ZONE{ 10 };
+    int8_t deadZone_m;
 
     AnalogInput axisX_m;
     AnalogInput axisY_m;
@@ -57,10 +59,10 @@ private:
     static int8_t getScaledValue(uint16_t toScale);
 
     [[nodiscard]]
-    static int8_t getAppliedDeadZone(int8_t toApply);
+    int8_t getAppliedDeadZone(int8_t toApply);
 
     [[nodiscard]]
-    static int8_t processAxisData(const AnalogInput& axis);
+    int8_t processAxisData(const AnalogInput& axis);
 };
 
 #endif // !JOYSTIC_COLLECTOR_HEADER

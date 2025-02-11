@@ -24,7 +24,7 @@ void BTS7960::setAntihoraryRotation(uint8_t percentage) {
     setRotation(percentage, Direction::Antihorary);
 }
 
-void BTS7960::setRelativeRotation(int percentage) {
+void BTS7960::setRelativeSpeed(int percentage) {
     if (percentage > 0) {
         setHoraryRotation(percentage);
     }

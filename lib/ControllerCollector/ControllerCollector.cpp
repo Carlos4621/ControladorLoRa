@@ -10,8 +10,7 @@ ControllerCollector::ControllerCollector(const JoystickPins &rightJoystickPins, 
 {
 }
 
-void ControllerCollector::beginPins()
-{
+void ControllerCollector::beginPins() {
     rightJoystick_m.beginPins();
     leftJoystick_m.beginPins();
     cameraJoystick_m.beginPins();

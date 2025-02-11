@@ -38,7 +38,7 @@ public:
 
     /// @brief Escribe en la estrada RPWM o LPWM dependiendo del signo del porcentaje. Si percentage > 0 entonces RPWM, si percentage < 0 entonces LPWM
     /// @param percentage Porcentaje relativo del giro. Si percentage < -100 || percentage > 100 lanza std::out_of_range
-    void setRelativeRotation(int percentage);
+    void setRelativeSpeed(int percentage);
 
     /// @brief Establece en 0 las dos entradas RPWM y LPWM del driver
     void stopMotor();

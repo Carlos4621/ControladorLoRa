@@ -9,14 +9,6 @@
 template<class T>
 class Collector {
 public:
-    Collector() = default;
-    Collector(const Collector&) = default;
-    Collector(Collector&&) noexcept = default;
-
-    virtual ~Collector() noexcept = default;
-
-    Collector& operator=(const Collector&) = default;
-    Collector& operator=(Collector&&) noexcept = default;
 
     /// @brief Obtiene y devuelve los estados actuales
     /// @return El estado actual de los pines
