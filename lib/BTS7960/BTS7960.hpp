@@ -1,4 +1,3 @@
-#pragma once
 #ifndef BTS7960_HEADER
 #define BTS7960_HEADER
 
@@ -20,7 +19,7 @@ public:
     /// @param pinRightPWM Pin GPIO de la entrada RPWM del driver
     /// @param pinLeftPWM Pin GPIO de la entrada LPWM del driver
     BTS7960(uint8_t pinRightPWM, uint8_t pinLeftPWM);
-
+    
     /// @brief Constructor con struct
     /// @param pins Struct con los pines a usar
     explicit BTS7960(const BTS7960Pins& pins);
@@ -38,7 +37,7 @@ public:
 
     /// @brief Escribe en la estrada RPWM o LPWM dependiendo del signo del porcentaje. Si percentage > 0 entonces RPWM, si percentage < 0 entonces LPWM
     /// @param percentage Porcentaje relativo del giro. Si percentage < -100 || percentage > 100 lanza std::out_of_range
-    void setRelativeSpeed(int percentage);
+    void setRelativeSpeed(int8_t percentage);
 
     /// @brief Establece en 0 las dos entradas RPWM y LPWM del driver
     void stopMotor();
@@ -54,12 +53,15 @@ private:
     AnalogOutput pinRightPWM_m;
     AnalogOutput pinLeftPWM_m;
 
+    bool pinsInitialized_m{ false };
+
     [[nodiscard]]
     static uint8_t getConvertedAnalogOutput(uint8_t percentage) noexcept;
 
     void setRotation(uint8_t percentage, const Direction& direction);
 
     void verifyPercentageRange(int8_t percentage);
+    void verifyPinsAreInitialized() const;
 };
 
 #endif // !BTS7960_HEADER
