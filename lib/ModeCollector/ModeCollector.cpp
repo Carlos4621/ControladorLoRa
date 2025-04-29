@@ -1,8 +1,8 @@
 #include "ModeCollector.hpp"
 
-ModeCollector::ModeCollector(uint8_t independentModePin, uint8_t fixedModePin, uint8_t autonomousModePin)
+ModeCollector::ModeCollector(uint8_t independentModePin, uint8_t fixedSpeedPin, uint8_t autonomousModePin)
     : independentMode_m{ independentModePin }
-    , fixedMode_m{ fixedModePin }
+    , fixedMode_m{ fixedSpeedPin }
     , autonomousMode_m{ autonomousModePin }
 {
 }
@@ -19,16 +19,12 @@ void ModeCollector::beginPins() {
 }
 
 Modes ModeCollector::getData() {
-    if (independentMode_m.read()) {
-        return Modes_INDEPENDENT;
-    }
-    else if(fixedMode_m.read()) {
+    if(fixedMode_m.read()) {
         return Modes_FIXED_SPEED;
     }
     else if(autonomousMode_m.read()) {
         return Modes_AUTONOMOUS;
     }
 
-    // TODO: quitar esto y poner algún tipo de excepción cuando no se lee ningún valor
     return Modes_INDEPENDENT;
 }
