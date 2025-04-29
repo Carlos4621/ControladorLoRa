@@ -53,15 +53,12 @@ private:
     AnalogOutput pinRightPWM_m;
     AnalogOutput pinLeftPWM_m;
 
-    bool pinsInitialized_m{ false };
-
     [[nodiscard]]
     static uint8_t getConvertedAnalogOutput(uint8_t percentage) noexcept;
 
     void setRotation(uint8_t percentage, const Direction& direction);
 
     void verifyPercentageRange(int8_t percentage);
-    void verifyPinsAreInitialized() const;
 };
 
 #endif // !BTS7960_HEADER

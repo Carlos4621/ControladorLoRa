@@ -12,11 +12,8 @@ BTS7960::BTS7960(const BTS7960Pins& pins)
 }
 
 void BTS7960::beginPins() {
-    if (!pinsInitialized_m) {
-        pinRightPWM_m.begin();
-        pinLeftPWM_m.begin();
-        pinsInitialized_m = true;
-    }
+    pinRightPWM_m.begin();
+    pinLeftPWM_m.begin();
 }
 
 void BTS7960::setHoraryRotation(uint8_t percentage) {
@@ -67,11 +64,5 @@ void BTS7960::setRotation(uint8_t percentage, const Direction &direction) {
 void BTS7960::verifyPercentageRange(int8_t percentage) {
     if ((percentage > MAX_PERCENTAGE) || (percentage < MIN_PERCENTAGE)) {
         throw std::out_of_range{ "Invalid percentage" };
-    }
-}
-
-void BTS7960::verifyPinsAreInitialized() const {
-    if (!pinsInitialized_m) {
-        throw std::logic_error("Pins not initialized");
     }
 }
