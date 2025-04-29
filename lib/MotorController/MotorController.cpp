@@ -26,30 +26,25 @@ void MotorController::applyMotorData(const ControllerData &dataToApply) {
     case Modes::Modes_AUTONOMOUS:
         applyOnAutonomousMode();
         break;
-    
-    default:
-        throw std::invalid_argument{ "Invalid mode" };
-        break;
     }
 }
 
 std::pair<int8_t, int8_t> MotorController::getFixedSpeedValuesConverted(const ControllerData &dataToConvert) noexcept {
-    int8_t rightSpeed{ 0 };
-    int8_t leftSpeed{ 0 };
-
     const auto& fixedSpeed{ dataToConvert.fixedSpeed };
     const auto& axisY{ dataToConvert.rightJoystick.axisY };
     const auto& axisX{ dataToConvert.rightJoystick.axisX };
-
+    
     if (axisY != 0) {
-        rightSpeed = leftSpeed = (axisY > 0) ? fixedSpeed : -fixedSpeed;
-    } 
-    else if (axisX != 0) {
-        rightSpeed = (axisX > 0) ? fixedSpeed : -fixedSpeed;
-        leftSpeed  = -rightSpeed;
+        const int8_t speed = (axisY > 0) ? fixedSpeed : -fixedSpeed;
+        return {speed, speed};
     }
-
-    return {rightSpeed, leftSpeed};
+    
+    if (axisX != 0) {
+        const int8_t rightSpeed = (axisX > 0) ? fixedSpeed : -fixedSpeed;
+        return {rightSpeed, -rightSpeed};
+    }
+    
+    return {0, 0};
 }
 
 

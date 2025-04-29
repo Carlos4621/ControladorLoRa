@@ -1,4 +1,3 @@
-#pragma once
 #ifndef MOTOR_CONTROLLER_HEADER
 #define MOTOR_CONTROLLER_HEADER
 
@@ -22,9 +21,10 @@ public:
     /// @param dataToApply Datos a aplicar
     void applyMotorData(const ControllerData& dataToApply);
 
-    /// @brief Convierte los valores de los joysticks a los del fixed speed en caso de estar en el modo fixed spee
+    /// @brief Convierte los valores de los joysticks a los del fixed speed en caso de estar en el modo fixed speed
     /// @param dataToConvert Data a convertir
     /// @return Par con los valores nuevos de los joysticks
+    [[nodiscard]]
     static std::pair<int8_t, int8_t> getFixedSpeedValuesConverted(const ControllerData& dataToConvert) noexcept;
 
 private:
