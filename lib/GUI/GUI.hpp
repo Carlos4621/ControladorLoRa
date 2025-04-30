@@ -1,6 +1,5 @@
-#pragma once
-#ifndef DISPLAY_HEADER
-#define DISPLAY_HEADER
+#ifndef GUI_HEADER
+#define GUI_HEADER
 
 #include <pb.h>
 #include "Buttons.pb.h"
@@ -51,4 +50,4 @@ private:
     void displaySNRData(float value);
 };
 
-#endif // !DISPLAY_HEADER
+#endif // !GUI_HEADER

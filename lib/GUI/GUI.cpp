@@ -6,49 +6,50 @@ GUI::GUI(SSD1306Wire &display)
 }
 
 struct GUI::Style {
-    static constexpr uint8_t DISPLAY_MIDDLE_X_POSITION{ 64 };
-    static constexpr uint8_t DISPLAY_MIDDLE_Y_POSITION{ 32 };
-
-    static constexpr uint8_t LEFT_LABEL_X_POSITION{ 17 };
-    static constexpr uint8_t LEFT_LABEL_Y_POSITION{ 34 };
-
-    static constexpr uint8_t LEFT_MOTOR_VALUE_X_POSITION{ 40 };
-    static constexpr uint8_t LEFT_MOTOR_VALUE_Y_POSITION{ 34 };
+    static constexpr uint8_t DisplayMiddle_X_Position{ 64 };
+    static constexpr uint8_t DisplayMiddle_Y_Position{ 32 };
 
 
-    static constexpr uint8_t RIGHT_LABEL_X_POSITION{ 66 };
-    static constexpr uint8_t RIGHT_LABEL_Y_POSITION{ 34 };
+    static constexpr uint8_t LeftLabel_X_Position{ 17 };
+    static constexpr uint8_t LeftLabel_Y_Position{ 34 };
 
-    static constexpr uint8_t RIGHT_MOTOR_VALUE_X_POSITION{ 94 };
-    static constexpr uint8_t RIGHT_MOTOR_VALUE_Y_POSITION{ 34 };
-
-
-    static constexpr uint8_t MODE_LABEL_X_POSITION{ 0 };
-    static constexpr uint8_t MODE_LABEL_Y_POSITION{ 52 };
-
-    static constexpr uint8_t MODE_SELECTED_X_POSITION{ 31 };
-    static constexpr uint8_t MODE_SELECTED_Y_POSITION{ 52 };
+    static constexpr uint8_t LeftMotorValue_X_Position{ 40 };
+    static constexpr uint8_t LeftMotorValue_Y_Position{ 34 };
 
 
-    static constexpr uint8_t FIXED_LABEL_X_POSITION{ 77 };
-    static constexpr uint8_t FIXED_LABEL_Y_POSITION{ 52 };
+    static constexpr uint8_t RightLabel_X_Position{ 66 };
+    static constexpr uint8_t RightLabel_Y_Position{ 34 };
 
-    static constexpr uint8_t FIXED_VALUE_X_POSITION{ 107 };
-    static constexpr uint8_t FIXED_VALUE_Y_POSITION{ 52 };
-
-
-    static constexpr uint8_t RRSI_LABEL_X_POSITION{ 0 };
-    static constexpr uint8_t RRSI_LABEL_Y_POSITION{ 0 };
-
-    static constexpr uint8_t RRSI_VALUE_X_POSITION{ 26 };
-    static constexpr uint8_t RRSI_VALUE_Y_POSITION{ 0 };
+    static constexpr uint8_t RightMotorValue_X_Position{ 94 };
+    static constexpr uint8_t RightMotorValue_Y_Position{ 34 };
 
 
-    static constexpr uint8_t SNR_LABEL_X_POSITION{ 0 };
-    static constexpr uint8_t SNR_LABEL_Y_POSITION{ 12 };
+    static constexpr uint8_t ModeLabel_X_Position{ 0 };
+    static constexpr uint8_t ModeLabel_Y_Position{ 52 };
 
-    static constexpr uint8_t SNR_VALUE_X_POSITION{ 24 };
-    static constexpr uint8_t SNR_VALUE_Y_POSITION{ 12 };
+    static constexpr uint8_t ModeSelected_X_Position{ 31 };
+    static constexpr uint8_t ModeSelected_Y_Position{ 52 };
+
+
+    static constexpr uint8_t FixedLabel_X_Position{ 77 };
+    static constexpr uint8_t FixedLabel_Y_Position{ 52 };
+
+    static constexpr uint8_t FixedValue_X_Position{ 107 };
+    static constexpr uint8_t FixedValue_Y_Position{ 52 };
+
+
+    static constexpr uint8_t RSSILabel_X_Position{ 0 };
+    static constexpr uint8_t RSSILabel_Y_Position{ 0 };
+
+    static constexpr uint8_t RSSIValue_X_Position{ 26 };
+    static constexpr uint8_t RSSIValue_Y_Position{ 0 };
+
+
+    static constexpr uint8_t SNRLabel_X_Position{ 0 };
+    static constexpr uint8_t SNRLabel_Y_Position{ 12 };
+
+    static constexpr uint8_t SNRValue_X_Position{ 24 };
+    static constexpr uint8_t SNRValue_Y_Position{ 12 };
 };
 
 void GUI::displayWaitingConnection() {
@@ -56,7 +57,7 @@ void GUI::displayWaitingConnection() {
 
     display_m.clear();
 
-    display_m.drawString(Style::DISPLAY_MIDDLE_X_POSITION, Style::DISPLAY_MIDDLE_Y_POSITION, "Conectando...");
+    display_m.drawString(Style::DisplayMiddle_X_Position, Style::DisplayMiddle_Y_Position, "Conectando...");
 
     display_m.display();
 }
@@ -66,7 +67,7 @@ void GUI::displayConnectionSuccesfull() {
 
     display_m.clear();
 
-    display_m.drawString(Style::DISPLAY_MIDDLE_X_POSITION, Style::DISPLAY_MIDDLE_Y_POSITION, "Conectado");
+    display_m.drawString(Style::DisplayMiddle_X_Position, Style::DisplayMiddle_Y_Position, "Conectado");
 
     display_m.display();
 }
@@ -79,9 +80,11 @@ void GUI::displayError(std::string_view errorString) {
     std::string textToShow{ "Error:\n" };
 
     textToShow.append(errorString);
-    textToShow.append("\n\nPlease restartt");
+    textToShow.append("\n\nPlease restart");
 
     display_m.write(textToShow.c_str());
+
+    display_m.display();
 }
 
 void GUI::showGUI(const ControllerData& controllerData, float RSSI, float SNR) {
@@ -121,7 +124,7 @@ void GUI::configureConnectionSuccesfullFont() {
 
 void GUI::configureErrorFont() {
     display_m.setFont(ArialMT_Plain_10);
-    display.setTextAlignment(TEXT_ALIGN_LEFT);
+    display_m.setTextAlignment(TEXT_ALIGN_LEFT);
 }
 
 void GUI::configureGUIFont() {
@@ -130,23 +133,23 @@ void GUI::configureGUIFont() {
 }
 
 void GUI::displayRightMotorData(int8_t value) {
-    display_m.drawString(Style::RIGHT_LABEL_X_POSITION, Style::RIGHT_LABEL_Y_POSITION, "Right:");
-    display_m.drawString(Style::RIGHT_MOTOR_VALUE_X_POSITION, Style::RIGHT_LABEL_Y_POSITION, std::to_string(value).c_str());
+    display_m.drawString(Style::RightLabel_X_Position, Style::RightLabel_Y_Position, "Right:");
+    display_m.drawString(Style::RightMotorValue_X_Position, Style::RightLabel_Y_Position, std::to_string(value).c_str());
 }
 
 void GUI::displayLeftMotorData(int8_t value) {
-    display_m.drawString(Style::LEFT_LABEL_X_POSITION, Style::LEFT_LABEL_Y_POSITION, "Left:");
-    display_m.drawString(Style::LEFT_MOTOR_VALUE_X_POSITION, Style::LEFT_MOTOR_VALUE_Y_POSITION, std::to_string(value).c_str());
+    display_m.drawString(Style::LeftLabel_X_Position, Style::LeftLabel_Y_Position, "Left:");
+    display_m.drawString(Style::LeftMotorValue_X_Position, Style::LeftMotorValue_Y_Position, std::to_string(value).c_str());
 }
 
 void GUI::displaySelectedMode(uint8_t value) {
-    display_m.drawString(Style::MODE_LABEL_X_POSITION, Style::MODE_LABEL_Y_POSITION, "Mode:");
-    display_m.drawString(Style::MODE_SELECTED_X_POSITION, Style::MODE_LABEL_Y_POSITION, std::to_string(value).c_str());
+    display_m.drawString(Style::ModeLabel_X_Position, Style::ModeLabel_Y_Position, "Mode:");
+    display_m.drawString(Style::ModeSelected_X_Position, Style::ModeLabel_Y_Position, std::to_string(value).c_str());
 }
 
 void GUI::displayFixedValue(int8_t value) {
-    display_m.drawString(Style::FIXED_LABEL_X_POSITION, Style::FIXED_LABEL_Y_POSITION, "Fixed:");
-    display_m.drawString(Style::FIXED_VALUE_X_POSITION, Style::FIXED_VALUE_Y_POSITION, std::to_string(value).c_str());
+    display_m.drawString(Style::FixedLabel_X_Position, Style::FixedLabel_Y_Position, "Fixed:");
+    display_m.drawString(Style::FixedValue_X_Position, Style::FixedValue_Y_Position, std::to_string(value).c_str());
 }
 
 void GUI::displayRSSIData(float value) {
@@ -155,8 +158,8 @@ void GUI::displayRSSIData(float value) {
 
     textToShow += " dBm";
 
-    display_m.drawString(Style::RRSI_LABEL_X_POSITION, Style::RRSI_LABEL_Y_POSITION, "RSSI:");
-    display_m.drawString(Style::RRSI_VALUE_X_POSITION, Style::RRSI_VALUE_Y_POSITION, textToShow.c_str());
+    display_m.drawString(Style::RSSILabel_X_Position, Style::RSSILabel_Y_Position, "RSSI:");
+    display_m.drawString(Style::RSSIValue_X_Position, Style::RSSIValue_Y_Position, textToShow.c_str());
 }
 
 void GUI::displaySNRData(float value) {
@@ -165,6 +168,6 @@ void GUI::displaySNRData(float value) {
 
     textToShow += " dB";
 
-    display_m.drawString(Style::SNR_LABEL_X_POSITION, Style::SNR_LABEL_Y_POSITION, "SNR:");
-    display_m.drawString(Style::SNR_VALUE_X_POSITION, Style::SNR_VALUE_Y_POSITION, textToShow.c_str());
+    display_m.drawString(Style::SNRLabel_X_Position, Style::SNRLabel_Y_Position, "SNR:");
+    display_m.drawString(Style::SNRValue_X_Position, Style::SNRValue_Y_Position, textToShow.c_str());
 }
