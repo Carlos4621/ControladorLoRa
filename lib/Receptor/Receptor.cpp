@@ -9,8 +9,7 @@ Receptor::Receptor(SX1262 &radio, SSD1306Wire &display, const BTS7960Pins &right
 {
 }
 
-void Receptor::initializeBTS7960Pins()
-{
+void Receptor::initializePins() {
     motorController_m.beginPins();
 }
 
@@ -23,12 +22,16 @@ void Receptor::initializeRadio(const LoRaParameters &params) {
     }
 }
 
+void Receptor::changeTimeoutForReceivePackage(size_t timeoutInMs) {
+    receivePackageTimeoutInMs_m = timeoutInMs;
+}
+
 void Receptor::start() {
     std::optional<std::vector<uint8_t>> receivedPackage;
 
     while (true) {
         try {
-            receivedPackage = std::move(radio_m.receivePackage(ReceivePackageTimeoutInMs));
+            receivedPackage = radio_m.receivePackage(receivePackageTimeoutInMs_m);
 
             if (!receivedPackage.has_value()) {
                 manageReconnection();
@@ -60,7 +63,7 @@ void Receptor::manageError(const std::exception &e) {
 }
 
 void Receptor::applyReceivedPackage(std::span<const uint8_t> receivedPackage) {
-    ControllerData decodedPackage = std::move(decoder_m.decode(receivedPackage));
+    ControllerData decodedPackage = decoder_m.decode(receivedPackage);
 
     showDataOnGUI(decodedPackage);
 

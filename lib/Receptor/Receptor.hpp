@@ -14,14 +14,16 @@ public:
     Receptor(SX1262& radio, SSD1306Wire& display, const BTS7960Pins& rightMotorPins, const BTS7960Pins& leftMotorPins, const BTS7960Pins& handMotorPins, 
         uint8_t horizontalCameraServoPin, uint8_t verticalCameraServoPin);
 
-    void initializeBTS7960Pins();
+    void initializePins();
     void initializeRadio(const LoRaParameters& params);
+
+    void changeTimeoutForReceivePackage(size_t timeoutInMs);
 
     [[noreturn]]
     void start();
 
 private:
-    static constexpr size_t ReceivePackageTimeoutInMs{ 200 };
+    size_t receivePackageTimeoutInMs_m{ 1000 };
 
     GUI gui_m;
     LoRaCommunicator radio_m;
