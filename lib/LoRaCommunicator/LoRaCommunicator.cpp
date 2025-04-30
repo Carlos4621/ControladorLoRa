@@ -2,7 +2,6 @@
 
 LoRaCommunicator::LoRaCommunicator(SX1262 &radio)
     : radio_m{ radio }
-    , receivedDataBuffer_m(BUFFER_SIZE)
 {
 }
 
@@ -28,8 +27,8 @@ void LoRaCommunicator::sendPackage(std::span<const uint8_t> package) {
     throwIfError<std::runtime_error>(transmisionStatus, "Unable to send the package");
 }
 
-std::optional<std::vector<uint8_t>> LoRaCommunicator::receivePackage(size_t timeoutInms) {
-    receivedDataBuffer_m.resize(BUFFER_SIZE);
+std::optional<std::vector<uint8_t>> LoRaCommunicator::receivePackage(size_t timeoutInms, size_t maxPacketSize) {
+    receivedDataBuffer_m.resize(maxPacketSize);
 
     const int16_t receiveStatus{ attemptReceive(timeoutInms) };
 
@@ -39,13 +38,11 @@ std::optional<std::vector<uint8_t>> LoRaCommunicator::receivePackage(size_t time
 
     throwIfError<std::runtime_error>(receiveStatus, "Unable to receive the package");
 
-    receivedDataBuffer_m.resize(radio_m.getPacketLength(true));
-
-    return receivedDataBuffer_m;
+    return std::vector<uint8_t>(receivedDataBuffer_m.begin(), receivedDataBuffer_m.begin() + radio_m.getPacketLength());
 }
 
 float LoRaCommunicator::getLastRSSI() const noexcept {
-    return radio_m.getRSSI(true);
+    return radio_m.getRSSI();
 }
 
 float LoRaCommunicator::getLastSNR() const noexcept {
@@ -60,6 +57,8 @@ int16_t LoRaCommunicator::attemptReceive(size_t timeoutInms) {
 
     while ((timeElapsed < timeoutInms) && (receiveStatus == RADIOLIB_ERR_RX_TIMEOUT)) {
         receiveStatus = radio_m.receive(receivedDataBuffer_m.data(), receivedDataBuffer_m.size());
+
+        delay(1); // Watchdog
 
         timeElapsed = (millis() - startTime);
     }

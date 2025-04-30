@@ -1,4 +1,3 @@
-#pragma once
 #ifndef LORA_COMMUNICATOR_HEADER
 #define LORA_COMMUNICATOR_HEADER
 
@@ -39,9 +38,10 @@ public:
 
     /// @brief Intenta recibir una serie de bytes, en caso de timeout devuelve std::nullopt
     /// @param timeoutInms Tiempo de espera antes de considerar como no recibido
+    /// @param maxPacketSize Tamaño máximo del paquete a recibir. Por defecto 64
     /// @return Paquete recibido en caso satisfactorio, sino std::nullopt
     [[nodiscard]]
-    std::optional<std::vector<uint8_t>> receivePackage(size_t timeoutInms);
+    std::optional<std::vector<uint8_t>> receivePackage(size_t timeoutInms, size_t maxPacketSize = 64);
 
     /// @brief Obtiene el RSSI del último paquete enviado o recibido
     /// @return RSSI del último paquete enviado o recibido
@@ -54,8 +54,6 @@ public:
     float getLastSNR() const noexcept;
 
 private:
-    static constexpr size_t BUFFER_SIZE{ 32 };
-
     SX1262& radio_m;
 
     std::vector<uint8_t> receivedDataBuffer_m{};
@@ -63,8 +61,10 @@ private:
     template<class ExceptionType>
     static void throwIfError(int16_t errorCode, std::string_view message);
 
+    [[nodiscard]]
     int16_t attemptReceive(size_t timeoutInms);
 
+    [[nodiscard]]
     static bool isRecuperableError(int16_t errorCode) noexcept;
 };
 
