@@ -1,6 +1,5 @@
-#pragma once
-#ifndef CONTROLLER_DATA_COLLECTOR_HEADER
-#define CONTROLLER_DATA_COLLECTOR_HEADER
+#ifndef CONTROLLER_COLLECTOR_HEADER
+#define CONTROLLER_COLLECTOR_HEADER
 
 #include "ButtonsCollector.hpp"
 #include "ModeCollector.hpp"
@@ -51,4 +50,4 @@ private:
     void updateButtonsData(bool& has_buttons, Buttons& data);
 };
 
-#endif // !CONTROLLER_DATA_COLLECTOR_HEADER
+#endif // !CONTROLLER_COLLECTOR_HEADER
