@@ -1,6 +1,5 @@
-#pragma once
-#ifndef FIXED_SPEED_HEADER
-#define FIXED_SPEED_HEADER
+#ifndef FIXED_SPEED_COLLECTOR_HEADER
+#define FIXED_SPEED_COLLECTOR_HEADER
 
 #include "Collector.hpp"
 #include "AnalogInput.hpp"
@@ -32,4 +31,4 @@ private:
     
 };
 
-#endif // !FIXED_SPEED_HEADER
+#endif // !FIXED_SPEED_COLLECTOR_HEADER
