@@ -1,4 +1,3 @@
-#pragma once
 #ifndef BUTTONS_COLLERCTOR_HEADER
 #define BUTTONS_COLLERCTOR_HEADER
 
