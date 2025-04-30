@@ -1,8 +1,8 @@
-#pragma once
 #ifndef JOYSTIC_COLLECTOR_HEADER
 #define JOYSTIC_COLLECTOR_HEADER
 
 #include <pb.h>
+#include <Arduino.h>
 #include "Collector.hpp"
 #include "AnalogInput.hpp"
 #include "DigitalInput.hpp"
@@ -23,7 +23,8 @@ public:
     /// @param axisXPin Pin del eje X del joystick
     /// @param axisYPin Pin del eje Y del joystick
     /// @param buttonPin Pin del botón del joystick
-    JoystickCollector(uint8_t axisXPin, uint8_t axisYPin, uint8_t buttonPin, int8_t deadZone = 10);
+    /// @param deadZone Zona muerta del joystick. Default = 10
+    JoystickCollector(uint8_t axisXPin, uint8_t axisYPin, uint8_t buttonPin, uint8_t deadZone = 10);
 
     /// @brief Constructor con struct
     /// @param pins Pines a usar
@@ -39,16 +40,16 @@ public:
 
     /// @brief Cambia la zona muerta
     /// @param newDeadZone Nueva zona muerta
-    void changeDeadZone(int8_t newDeadZone) noexcept;
+    void changeDeadZone(uint8_t newDeadZone) noexcept;
 
 private:
-    static constexpr int8_t MIN_JOYSTICK_VALUE{ -100 };
-    static constexpr uint8_t MAX_JOYSTICK_VALUE{ 100 };
+    static constexpr int8_t MinJoystickValue{ -100 };
+    static constexpr int8_t MaxJoystickValue{ 100 };
 
-    static constexpr uint8_t MIN_ANALOG_INPUT{ 0 };
-    static constexpr uint16_t MAX_ANALOG_INPUT{ 4095 };
+    static constexpr uint8_t MinAnalogInput{ 0 };
+    static constexpr uint16_t MaxAnalogInput{ 4095 };
 
-    int8_t deadZone_m;
+    uint8_t deadZone_m;
 
     AnalogInput axisX_m;
     AnalogInput axisY_m;

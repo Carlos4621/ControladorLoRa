@@ -1,6 +1,6 @@
 #include "JoystickCollector.hpp"
 
-JoystickCollector::JoystickCollector(uint8_t axisXPin, uint8_t axisYPin, uint8_t buttonPin, int8_t deadZone)
+JoystickCollector::JoystickCollector(uint8_t axisXPin, uint8_t axisYPin, uint8_t buttonPin, uint8_t deadZone)
     : axisX_m{ axisXPin }
     , axisY_m{ axisYPin }
     , button_m{ buttonPin }
@@ -21,21 +21,18 @@ void JoystickCollector::beginPins() {
 
 Joystick JoystickCollector::getData() {
     Joystick data = Joystick_init_zero;
-
     data.axisX = processAxisData(axisX_m);
     data.axisY = processAxisData(axisY_m);
-
     data.button = button_m.read();
-
     return data;
 }
 
-void JoystickCollector::changeDeadZone(int8_t newDeadZone) noexcept {
+void JoystickCollector::changeDeadZone(uint8_t newDeadZone) noexcept {
     deadZone_m = newDeadZone;
 }
 
 int8_t JoystickCollector::getScaledValue(uint16_t toScale) {
-    return static_cast<int8_t>(map(toScale, MIN_ANALOG_INPUT, MAX_ANALOG_INPUT, MIN_JOYSTICK_VALUE, MAX_JOYSTICK_VALUE));
+    return static_cast<int8_t>(map(toScale, MinAnalogInput, MaxAnalogInput, MinJoystickValue, MaxJoystickValue));
 }
 
 int8_t JoystickCollector::getAppliedDeadZone(int8_t toApply) {
