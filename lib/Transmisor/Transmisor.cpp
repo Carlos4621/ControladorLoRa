@@ -21,11 +21,11 @@ void Transmisor::start() {
     std::vector<uint8_t> encodedData;
 
     while (true) {
-        data = std::move(collector_m.getControllerData());
+        data = collector_m.getControllerData();
 
         gui_m.showGUI(data, radio_m.getLastRSSI(), radio_m.getLastSNR());
 
-        encodedData = std::move(encoder_m.encode(data));
+        encodedData = encoder_m.encode(data);
 
         radio_m.sendPackage(encodedData);
 
