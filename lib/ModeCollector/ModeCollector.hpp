@@ -8,7 +8,6 @@
 
 /// @brief Struct con los pines del modo de operación
 struct ModeSelectionPins {
-    uint8_t independentPin;
     uint8_t fixedSpeedPin;
     uint8_t autonomousPin;
 };
@@ -18,10 +17,9 @@ class ModeCollector : public Collector<Modes> {
 public:
 
     /// @brief Constructor base
-    /// @param independentModePin Pin que indica el modo independiente 
     /// @param fixedSpeedPin Pin que indica el modo fixed
     /// @param autonomousModePin Pin que indica el modo autónomo
-    ModeCollector(uint8_t independentModePin, uint8_t fixedSpeedPin, uint8_t autonomousModePin);
+    ModeCollector(uint8_t fixedSpeedPin, uint8_t autonomousModePin);
 
     /// @brief Constructor con struct
     /// @param pins Pines a usar
@@ -37,7 +35,6 @@ public:
 
 private:
 
-    DigitalInput independentMode_m;
     DigitalInput fixedMode_m;
     DigitalInput autonomousMode_m;
 

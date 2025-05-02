@@ -1,19 +1,17 @@
 #include "ModeCollector.hpp"
 
-ModeCollector::ModeCollector(uint8_t independentModePin, uint8_t fixedSpeedPin, uint8_t autonomousModePin)
-    : independentMode_m{ independentModePin }
-    , fixedMode_m{ fixedSpeedPin }
+ModeCollector::ModeCollector(uint8_t fixedSpeedPin, uint8_t autonomousModePin)
+    : fixedMode_m{ fixedSpeedPin }
     , autonomousMode_m{ autonomousModePin }
 {
 }
 
 ModeCollector::ModeCollector(const ModeSelectionPins & pins)
-    : ModeCollector{ pins.independentPin, pins.fixedSpeedPin, pins.autonomousPin }
+    : ModeCollector{ pins.fixedSpeedPin, pins.autonomousPin }
 {
 }
 
 void ModeCollector::beginPins() {
-    independentMode_m.begin();
     fixedMode_m.begin();
     autonomousMode_m.begin();
 }
