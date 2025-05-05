@@ -12,8 +12,8 @@ void CameraDirectioner::beginPins() {
 }
 
 void CameraDirectioner::centralize() {
-    horizontalServo_m.writeMicroseconds(CentralizedServoMicroseconds);
-    verticalServo_m.writeMicroseconds(CentralizedServoMicroseconds);
+    horizontalServo_m.write(CentralizedAngle);
+    verticalServo_m.write(CentralizedAngle);
 }
 
 void CameraDirectioner::applyDirectionData(const Joystick &controllerData) {
@@ -22,18 +22,18 @@ void CameraDirectioner::applyDirectionData(const Joystick &controllerData) {
 }
 
 bool CameraDirectioner::isAValidMicroseconds(int microseconds) {
-    return (MinMicroseconds <= microseconds) && (microseconds <= MaxMicroseconds);
+    return (MinAngle <= microseconds) && (microseconds <= MaxAngle);
 }
 
 void CameraDirectioner::applyOnServo(Servo &servo, int32_t axisValue) {
     if (axisValue == 0) {
         return;
     }
-    
-    const auto currentAngle{ servo.readMicroseconds() };
-    const auto objetiveAngle{ currentAngle + axisValue };
+
+    const auto currentAngle{ servo.read() };
+    const auto objetiveAngle{ currentAngle + (axisValue / AngleStep) };
 
     if (isAValidMicroseconds(objetiveAngle)) {
-        servo.writeMicroseconds(objetiveAngle);
+        servo.write(objetiveAngle);
     }
 }

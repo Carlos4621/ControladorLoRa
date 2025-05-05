@@ -1,4 +1,3 @@
-#pragma once
 #ifndef CAMERA_DIRECTIONER_HEADER
 #define CAMERA_DIRECTIONER_HEADER
 
@@ -31,9 +30,10 @@ public:
 
 private:
 
-    static constexpr uint16_t MinMicroseconds{ 600 };
-    static constexpr uint16_t MaxMicroseconds{ 2400 };
-    static constexpr uint16_t CentralizedServoMicroseconds{ 1350 };
+    static constexpr uint16_t MinAngle{ 0 };
+    static constexpr uint16_t MaxAngle{ 180 };
+    static constexpr uint16_t CentralizedAngle{ 90 };
+    static constexpr uint16_t AngleStep{ 10 };
 
     uint8_t pinVerticalServo_m;
     uint8_t pinHorizontalServo_m;
