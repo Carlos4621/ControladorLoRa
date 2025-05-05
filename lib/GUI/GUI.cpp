@@ -58,6 +58,20 @@ struct GUI::Style {
         static constexpr uint8_t SNRValue_X{ 25 };
         static constexpr uint8_t SNRValue_Y{ 13 };
     };
+
+    struct Buttons {
+        static constexpr uint8_t ALabel_X{ 56 };
+        static constexpr uint8_t ALabel_Y{ 51 };
+        
+        static constexpr uint8_t BLabel_X{ 65 };
+        static constexpr uint8_t BLabel_Y{ 51 };
+        
+        static constexpr uint8_t XLabel_X{ 47 };
+        static constexpr uint8_t XLabel_Y{ 51 };
+        
+        static constexpr uint8_t YLabel_X{ 56 };
+        static constexpr uint8_t YLabel_Y{ 42 };
+    };
 };
 
 void GUI::displayWaitingConnection() {
@@ -109,6 +123,20 @@ void GUI::showGUI(const ControllerData& controllerData, float RSSI, float SNR) {
         displayLabelAndValue("R:", static_cast<int8_t>(controllerData.rightJoystick.axisY), 
             Style::Motor::RightLabel_X, Style::Motor::RightLabel_Y, 
             Style::Motor::RightValue_X, Style::Motor::RightValue_Y);
+    }
+
+    if (controllerData.has_buttons) {
+        if (controllerData.buttons.buttonA) {
+            display_m.drawString(Style::Buttons::ALabel_X, Style::Buttons::ALabel_Y, "A");
+        }
+        
+        if (controllerData.buttons.buttonB) {
+            display_m.drawString(Style::Buttons::BLabel_X, Style::Buttons::BLabel_Y, "B");
+        }
+        
+        if (controllerData.buttons.buttonX) {
+            display_m.drawString(Style::Buttons::XLabel_X, Style::Buttons::XLabel_Y, "X");
+        }
     }
 
     displayLabelAndValue("Cx:", static_cast<int8_t>(controllerData.cameraJoystick.axisX), 
