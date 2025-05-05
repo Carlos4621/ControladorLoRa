@@ -5,12 +5,13 @@ Receptor::Receptor(SX1262 &radio, SSD1306Wire &display, const BTS7960Pins &right
     : radio_m{ radio }
     , gui_m{ display }
     , motorController_m{ rightMotorPins, leftMotorPins, handMotorPins }
-    , cameraDirectioner_m{ horizontalCameraServoPin,  verticalCameraServoPin }
+    , cameraDirectioner_m{ horizontalCameraServoPin, verticalCameraServoPin }
 {
 }
 
 void Receptor::initializePins() {
     motorController_m.beginPins();
+    cameraDirectioner_m.beginPins();
 }
 
 void Receptor::initializeRadio(const LoRaParameters &params) {
@@ -28,6 +29,7 @@ void Receptor::changeTimeoutForReceivePackage(size_t timeoutInMs) {
 
 void Receptor::start() {
     std::optional<std::vector<uint8_t>> receivedPackage;
+    cameraDirectioner_m.centralize();
 
     while (true) {
         try {
